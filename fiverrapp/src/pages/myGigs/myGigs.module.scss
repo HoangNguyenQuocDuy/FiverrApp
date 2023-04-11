@@ -1,0 +1,66 @@
+.wrapper {
+    padding: var(--nav-height) 32px 0;
+
+    .header {
+        padding: 40px 0 60px;
+        display: flex;
+        justify-content: space-between;
+        
+        .title {
+            font-size: 2.8rem;
+            color: var(--text-h)
+        }
+
+        .add-gig-btn {
+            font-size: 1.6rem;
+            padding: 6px 14px;
+            color: #fff;
+            background-color: var(--light-green);
+            border-radius: 4px;
+            transition: background-color .15s;
+
+            &:hover {
+                background: var(--hover-green);
+            }
+        }
+    }
+
+    .gigs {
+        width: 100%;
+        font-size: 1.6rem;
+        thead {
+            th {
+                // text-align: center;
+            }
+        }
+
+        tbody {
+            tr {
+                width: 100%;
+                height: 50px;
+                td {
+                    width: 100px;
+                    &.img {
+                        height: 25px;
+                        img {
+                            width: 50px;
+                            height: 100%;
+                            object-fit: cover;
+                            border-radius: 4px;
+                        }
+                    }
+
+                    .delete-icon {
+                        color: var(--light-red);
+                        padding: 4px;
+                        cursor: pointer;
+                    }
+                }
+
+                &:nth-child(odd) {
+                    background-color: #1dbf730f;
+                }
+            }
+        }
+    }
+}

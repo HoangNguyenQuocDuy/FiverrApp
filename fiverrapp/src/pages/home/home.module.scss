@@ -1,0 +1,186 @@
+.home {
+    position: relative;
+
+    .banner {
+        padding-top: 80px;
+        background-color: green;
+    }
+    
+    .popular-box {
+        padding-bottom: 96px;
+        margin-top: 80px;
+        color: var(--text-h);
+
+        h2 {
+            padding-left: 32px;
+            padding-right: 32px;
+            margin-bottom: 20px;
+            font-size: 3.2rem;
+        }
+       
+    }
+
+    .selling-proposition-box{
+        background-color: var(--bg-green);
+
+        .selling-proposition-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 64px 32px;
+            .selling-proposition-left{
+                width: 33%;
+               h2 {
+                font-size: 3.2rem;
+               }
+               ul {
+                    li {
+                        font-size: 1.8rem;
+                        color: var(--check-grey);
+                        .sell-item {
+                            display: flex;
+                            align-items: center;
+                            padding-bottom: 8px;
+                        }
+                        
+                        .item-title {
+                            color: var(--text-h);
+                        }
+                        .check-icon {
+                            display: flex;
+                            margin-right: 10px;
+                        }
+                    }
+               } 
+            }
+            .selling-proposition-right{
+                width: 50%;
+                img {
+                    width: 100%;
+                    object-fit: cover;
+                }
+            }
+        }
+    }
+
+    .business-box {
+        background-color: var(--dark-green);
+        color: #fff;
+
+        .business-wrapper {
+            display: flex;
+            justify-content:space-between;
+            align-items:center;
+            padding: 64px 32px;
+        }
+
+        .business-left{
+            width: 45%;
+            font-size: 1.8rem;
+
+            .business-icon{
+                padding-bottom: 32px;
+                display: flex;
+                align-items: center;
+                
+                .new {
+                    background-color: rgb(88, 74, 255);
+                    padding: 3px 7px 2px;
+                    border-radius: 999px;
+                    margin-left: 10px;
+                }
+            }
+
+            ul {
+                margin-bottom: 48px;
+                li{
+                    color: var(--check-grey);
+                    padding-bottom: 12px;
+
+                    .sell-item {
+                        display: flex;
+                        align-items: center;
+
+                        .item-title {
+                            color: #fff;
+                        }
+    
+                        .check-icon {
+                            display: inline-block;
+                            width: 20px;
+                            height: 20px;
+                            margin-right: 10px;
+                        }
+                    }
+                }
+            }
+
+            .btn-explore {
+                cursor: pointer;
+                font-size: 1.6rem;
+                padding: 10px 20px;
+                background-color: var(--light-green);
+                color: #fff;
+                border-radius: 4px;
+                transition: background-color .15s;
+
+                &:hover {
+                    background: var(--hover-green);
+                }
+            }
+
+        }
+        .business-right{
+            width: 50%;
+            img {
+                width: 100%;
+                object-fit: cover;
+            }
+        }
+    }
+
+    .products {
+        background-color: var(--bg-product);
+        padding: 96px 0;
+
+        h2 {
+            padding-left: 32px;
+            padding-right: 32px;
+            margin-bottom: 20px;
+            font-size: 3.2rem;
+        }
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .selling-proposition-box {
+
+        .selling-proposition-wrapper {
+            flex-direction: column;
+
+            .selling-proposition-left, .selling-proposition-right {
+                width: 100%!important;
+            }
+        }
+    }
+
+    .business-box {
+        .business-wrapper {
+            flex-direction: column;
+
+            .business-left, .business-right {
+                width: 100% !important;
+            }
+
+            .business-right {
+                margin-top: 50px;
+            }
+        }
+    }
+}
+
+// @media screen and (max-width: 640px) {
+//     .slide-mobile {
+        
+//     }
+// }

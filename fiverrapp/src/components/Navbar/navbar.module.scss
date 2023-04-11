@@ -1,0 +1,221 @@
+.navBar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    background-color: transparent;
+    
+    &.active {
+        background-color: #fff;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        
+        .nav {
+            color: var(--text-h);
+            .link {
+                li {
+                    color: var(--light-green);
+                }
+            }
+        }
+    }
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #fff;
+    height: 80px;
+    font-size: 1.6rem;
+    transition: .25s;
+    padding-left: 32px;
+    padding-right: 32px;
+    position: relative;
+    
+    .list-icon {
+        position: absolute;
+        font-size: 2rem;
+        cursor: pointer;
+        display: none;
+    }
+
+    .logo {
+        color: currentColor;
+    }
+
+    .links {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+
+        li {
+            padding-right: 24px;
+            cursor: pointer;
+        }
+    
+        .btn {
+            background-color: transparent;
+            color: #fff;
+            border: 1px #fff solid;
+            font-size: 1.6rem;
+            cursor: pointer;
+    
+            &:hover {
+                background-color: var(--light-green);
+                border-color: transparent;
+            }
+        }
+
+        .close-icon {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 2.8rem;
+            cursor: pointer;
+            color: #999;
+            transition: color .15s;
+            display: none;
+
+            &:hover {
+                color: #fff;
+            }
+        }
+
+        .user-options {
+            position: relative;
+            .avatar {
+                width: 42px;
+                height: 42px;
+                border-radius: 999px;
+                margin-right: 10px;
+                object-fit: cover;
+            }
+
+            .options {
+                position: absolute;
+                top: 40px;
+                right: 20px;
+                background-color: #fff;
+                min-width: 200px;
+                border-radius: 4px;
+                box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+
+                &::before {
+                    position: absolute;
+                    content: '';
+                    top: -38px;
+                    right: 6px;
+                    border-color: transparent transparent #fff transparent ;
+                    border-width: 24px;
+                    border-style: solid;
+                    
+                }
+                
+                .item {
+                    display: block;
+                    padding: 8px 20px;
+                    font-size: 1.5rem;
+                    color: var(--dark-grey);
+
+                    &:hover {
+                        text-decoration: none;
+                        transition: .25s;
+                        background-color: #f1f1f1;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.details {
+    height: 0;
+    display: flex;
+    justify-content: space-between;
+    visibility: hidden;
+    transition: .5s;
+    opacity: 0;
+    padding-left: 32px;
+    padding-right: 32px;
+
+    &.active {
+        height: 100%;
+        visibility: visible;
+        opacity: 1;
+
+    }
+    a {
+        color: var(--text-ft);
+        font-size: 1.5rem;
+        border-bottom: 2.5px solid transparent;
+
+        &:hover {
+            text-decoration: none;
+            border-bottom: 2.5px solid var(--light-green);
+        }
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .navBar {
+
+        &.active {
+            .links {
+                li {
+                    color: currentColor;
+                }
+            }
+        }
+
+        .nav {
+            .logo {
+                margin: 0 auto;
+            }
+    
+            .list-icon {
+                display: block;
+            }
+    
+            .links {
+                flex-direction: column;
+                position: fixed;
+                width: 100%;
+                top: 50%;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                transform: translateY(-50%);
+                background-color: #000;
+                padding: 0;
+                opacity: .9;
+                overflow: hidden;
+                transition: 0.35s;
+
+                &.hide {
+                    width: 0;
+                    opacity: 0;
+                }
+
+                li {
+                    margin: 20px 0;
+                    color: #999;
+                    transition: color .15s;
+
+                    &:hover {
+                        color: #fff;
+                    }
+                }
+            }
+
+            .close-icon {
+                display: block;
+            }
+        }
+
+        .details {
+            display: none;
+        }
+    }
+}

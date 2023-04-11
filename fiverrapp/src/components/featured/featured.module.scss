@@ -1,0 +1,112 @@
+.wrapper {
+    padding-left: 32px;
+    padding-right: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .left {
+        max-width: 560px;
+        color: #fff;
+        .title {
+            font-size: 4rem;
+        }
+
+        .search-form {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #fff;
+            font-size: 1.6rem;
+            border-radius: 3px;
+
+            .lb {
+                position: relative;
+                margin-bottom: 0;
+                height: 100%;
+                flex: 1;
+                color: var(--text-grey);
+
+                i {
+                    font-size: 1.6rem;
+                    padding: 0 14px;
+                    cursor: pointer;
+                }
+                .search-content {
+                    width: 80%;
+                    border: none;
+                    outline: none;
+                    padding: 10px 0;
+                }
+
+                .clear-icon{
+                    position: absolute;
+                    padding: 2px 6px;
+                    top: 50%;
+                    right: 24px;
+                    transform: translateY(-50%);
+                    cursor: pointer;
+                }
+            }
+            
+            .submit-btn {
+                font-size: 1.6rem;
+                background-color: var(--light-green);
+                color: #fff;
+                padding: 10px;
+                border-radius: 0 3px 3px 0;
+                cursor: pointer;
+            }
+        }
+
+        .popular {
+            font-size: 1.6rem;
+            margin-top: 24px;
+
+            .title-text {
+                margin-right: 12px;
+            }
+
+            button {
+                margin-right: 12px;
+                border: 1px solid #fff;
+                color: #fff;
+                background-color: transparent;
+                border-radius: 40px;
+                transition: .25s;
+                padding: 1px 12px;
+                cursor: pointer;
+                outline: none;
+
+                &:hover {
+                    color: #000;
+                    background-color: #fff;
+                }
+            }
+        }
+    }
+    .right {
+        img {
+            width: 550px;
+            height: 550px;
+        }
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .wrapper {
+        justify-content: center;
+        padding-bottom: 80px;
+        
+        .left {
+
+            .popular {
+                display: none;
+            }
+        }
+
+        .right {
+            display: none;
+        }
+    }
+}

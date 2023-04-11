@@ -1,0 +1,39 @@
+.trustedBy {
+    background-color: var(--grey-trusted);
+    padding: 10px 0;
+}
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.6rem;
+    color: var(--text-grey);
+    padding-left: 32px;
+    padding-right: 32px;
+
+    .trust-title {
+        text-align: center;
+        padding-right: 44px;
+    }
+
+    .item {
+        padding-right: 60px;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .wrapper {
+        .trust-title {
+            display: none;
+        }
+
+        .item {
+            padding-right: 1%;
+            
+            img {
+                width: 80%;
+            }
+        }
+    }
+}

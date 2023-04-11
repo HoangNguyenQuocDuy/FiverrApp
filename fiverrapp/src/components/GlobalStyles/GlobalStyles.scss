@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700;800&family=Inter:wght@600;700&family=Mukta:wght@600&display=swap');
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Mukta', sans-serif;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+:root {
+    --light-green: #1dbf73;
+    --hover-green: #19a463;
+    --light-blue: #7cc6f8;
+    --dark-grey: #62646a;
+    --grey-trusted: #fafafa;
+    --text-grey: #b5b6ba;
+    --check-grey: #7A7D85;
+    --text-h: #404145;
+    --bg-green: #f1fdf7;
+    --dark-green: #0d084d;
+    --cat-grey: #95979d;
+    --bg-product: #f5f5f5;
+    --text-ft: #74767e;
+    --light-yellow: #ffbe5b;
+    --wrapper-mt: 105px;
+    --divide: #c5c6c9;
+    --nav-height: 105px;
+    --pt-gig-nav: 40px;
+    --light-red: #fa8585;
+}
+
+ul {
+    list-style-type: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1240px;
+    }
+}
+
+.max-width-box {
+    max-width: 1400px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+button {
+    border: none;
+    outline: none !important;
+    cursor: pointer;
+}
+
+.slick-slide > div {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    padding: 10px;
+}
+
+@mixin sm {
+    @media only screen and (min-width: 640px) {
+        @content;
+    }
+}

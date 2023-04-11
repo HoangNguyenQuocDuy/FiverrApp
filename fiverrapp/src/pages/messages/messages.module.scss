@@ -1,0 +1,67 @@
+.wrapper {
+    padding: var(--nav-height) 32px 0;
+
+    .title {
+        padding: 40px 0 60px;
+        font-size: 2.8rem;
+        color: var(--text-h)
+    }
+
+    .messages {
+        width: 100%;
+        font-size: 1.6rem;
+
+        thead {
+            height: 48px;
+
+            th:first-child {
+                padding-left: 10px;
+            }
+        }
+
+        tbody {
+            tr {
+                height: 80px;
+
+                .name {
+                    min-width: 100px;
+                    padding-left: 20px;
+                }
+        
+                .content {
+
+                    .link {
+                        width: 100%;
+                        color: var(--text-ft);
+                    }
+                }
+        
+                .time {
+                    min-width: 100px;
+                    color: var(--text-ft);
+                }
+        
+                .action {
+                    min-width: 160px;
+        
+                    button {
+                        font-size: 1.6rem;
+                        padding: 6px 14px;
+                        color: #fff;
+                        background-color: var(--light-green);
+                        border-radius: 4px;
+                        transition: background-color .15s;
+            
+                        &:hover {
+                            background: var(--hover-green);
+                        }
+                    }
+                }
+
+                &:nth-child(odd) {
+                    background-color: #1dbf730f;
+                }
+            }
+        }
+    }
+}

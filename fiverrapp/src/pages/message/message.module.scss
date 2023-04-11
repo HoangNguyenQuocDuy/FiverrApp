@@ -1,0 +1,82 @@
+.wrapper {
+    padding: var(--nav-height) 32px 0;
+
+    .container {
+        .breadcrumb {
+            font-size: 2rem;
+            color: var(--text-h);
+        }
+
+        .message {
+            display: flex;
+            flex-direction: column;
+            overflow-y: scroll;
+            height: 500px;
+            margin: 40px 16px 0;;
+
+            .item {
+                display: flex;
+                // flex-direction: column-reverse;
+
+                &.owner {
+                    align-self: flex-end;
+                    flex-direction: row-reverse;
+
+                    .avatar {
+                        display: none;
+                    }
+                    
+                    .content {
+                        color: #fff;
+                        background-color: var(--light-blue);
+                    }
+                }
+                .avatar {
+                    width: 40px;
+                    height: 40px;
+                    img {
+                        width: 100%;
+                        height: 100%;
+                        border-radius: 50%;
+
+                        object-fit: cover;
+                    }
+                }
+                .content {
+                    width: 45%;
+                    font-size: 1.6rem;
+                    background-color: var(--divide);
+                    padding: 16px;
+                    margin-left: 20px;
+                    border-radius: 30px;
+                }
+            }
+        }
+
+        .write {
+            font-size: 1.6rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+      
+            textarea {
+              width: 80%;
+              height: 100px;
+              padding: 10px;
+              border: 1px solid lightgray;
+              border-radius: 10px;
+            }
+      
+            button{
+              background-color: #1dbf73;
+              padding: 10px;
+              color: white;
+              font-weight: 500;
+              border: none;
+              border-radius: 10px;
+              cursor: pointer;
+              width: 100px;
+            }
+          }
+    }
+}
