@@ -5,7 +5,7 @@ async function ConnectDB() {
     .then((data)=>{
         console.log("connectDB successful!")
     })
-    .catch(err => console(err))
+    .catch(err => {console.log(err)})
 }
 
 export default ConnectDB;
