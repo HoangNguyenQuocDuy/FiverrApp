@@ -1,0 +1,165 @@
+.main {
+    width: 100%;
+    height: 100vh;
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,145,13,1) 0%, rgba(0,255,148,1) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;  
+    
+    .form {
+        background-color: #fff;
+        padding: 16px 32px;
+        width: 1000px;
+        height: 90vh;
+        border-radius: 10px;
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+
+        .logo {
+            color: var(--text-h);
+            padding: 20px 0 0;   
+        }
+
+        .body-form {
+            display: flex;
+    
+            h2 {
+                font-size: 3.2rem;
+                margin-bottom: 0;
+                color: var(--text-grey);
+            }
+            
+            input, textarea {
+                width: 80%;
+                outline: none;
+                padding: 6px 10px;
+                border: 1px solid var(--text-grey);
+                border-radius: 4px;
+                margin-left: 4px;
+            }
+
+            .left {
+                width: 55%;
+                padding-left: 20px;
+                label {
+                    width: 100%;
+                    padding-top: 10px;
+                }
+            }
+
+            .right {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+
+                .activateSeller{
+                    margin-top: 20px;
+                    display: flex;
+
+                    .switch {
+                        position: relative;
+                        display: inline-block;
+                        width: 36px;
+                        height: 20px;
+                        margin-left: 20px;
+
+                        input {
+                            opacity: 0;
+                            width: 0;
+                            height: 0;
+                        }
+
+                        .slider {
+                            position: absolute;
+                            cursor: pointer;
+                            top: 0;
+                            left: 0;
+                            right: 0;
+                            bottom: 0;
+                            background-color: #ccc;
+                            transition: .4s;
+
+                            &:before {
+                                position: absolute;
+                                content: "";
+                                height: 12px;
+                                width: 12px;
+                                left: 4px;
+                                bottom: 4px;
+                                background-color: white;
+                                transition: .4s;
+                            }
+
+                            &.round {
+                                border-radius: 34px;
+
+                                &:before {
+                                    border-radius: 50%;
+                                }
+                            }
+
+                        }
+
+                          
+                    }
+                      
+                      input:checked + .slider {
+                        background-color: var(--light-green);
+                      }
+                      
+                      input:focus + .slider {
+                        box-shadow: 0 0 1px var(--light-green);
+                      }
+                      
+                      input:checked + .slider:before {
+                        -webkit-transform: translateX(12px);
+                        -ms-transform: translateX(12px);
+                        transform: translateX(12px);
+                      }
+                }
+
+                label {
+                    width: 100%;
+
+                    input {
+                        width: 90%;
+                    }
+
+                    input[type="number"] {}::-webkit-outer-spin-button,
+                    input[type="number"] {}::-webkit-inner-spin-button {
+                        -webkit-appearance: none;
+                        margin: 0;
+                    }
+
+                    textarea {
+                        width: 90%;
+                        min-height: 100%;
+                    }
+
+                    &.phoneNumber {
+                        margin-top: 20px;
+                    }
+
+                    &.desc {
+                        margin-top: 40px;
+                    }
+                }
+
+                .register-btn {
+                    background-color: var(--grey-green);
+                    color: #fff;
+                    margin: 70px 0 10px;
+                    padding: 6px 20px;
+                    border-radius: 20px;
+                    transition: background-color .15s;
+                    width: 80%;
+
+                    &:hover {
+                        background-color: var(--light-green);
+                    }
+                }
+            }
+        }
+    }
+}

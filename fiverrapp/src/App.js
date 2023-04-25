@@ -26,7 +26,7 @@ function App() {
           {publicRoutes.map((route, idx) => {
             const Page = route.component;
             let Layout = DefaultLayout;
-            if (route.layout) Layout = route.Layout;
+            if (route.layout) Layout = route.layout;
             else if (route.layout === null) Layout = Fragment;
             return (
               <Route
@@ -44,7 +44,8 @@ function App() {
             privateRoutes.map((route, idx) => {
               const Page = route.component;
               let Layout = DefaultLayout;
-              if (route.layout) Layout = route.Layout;
+              console.log(route.layout)
+              if (route.layout) Layout = route.layout;
               else if (route.layout === null) Layout = Fragment;
               return (
                 <Route
