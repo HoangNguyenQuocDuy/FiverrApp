@@ -100,7 +100,7 @@ function Navbar() {
             >
               <img
                 className={cx("avatar")}
-                src={currentUser.avatar || "./imgs/noavatar.png"}
+                src={(currentUser.img!=="" && currentUser.img) || "./imgs/noavatar.png"}
                 alt="avatar"
               />
               <span className={cx("userName")}>{currentUser.username}</span>

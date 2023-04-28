@@ -2,31 +2,26 @@ import User from "../models/user.model";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import createError from "../utils/createError";
-import multer from "multer";
+const cloudinary = require('cloudinary').v2;
 
-let filename = ""
+export const handleUploadFile = async (req, res) => {
+  try {
+    const result = await cloudinary.uploader.upload(req.file.path);
 
-export const handleUploadFile = (req, res) => {
-  console.log(req.file);
-  filename = req.file.filename;
-  
-  if (req.fileValidationError) {
-    return res.send(req.fileValidationError);
-  } else if (!req.file) {
-    return res.send("Please select an image to upload");
+    return res.status(200).send(result.url)
+  } catch (err) {
+    console.log(err);
+    res.status(404).send('file not found!');
   }
-
-  res.send("Upload avatar successful!");
 };
 
 export const register = async (req, res) => {
   try {
     const password = bcrypt.hashSync(req.body.password, 5);
-    console.log(req.body)
+    console.log(req.body);
     const newUser = new User({
       ...req.body,
       password,
-      img: filename
     });
     await newUser.save();
     res.status(200).send("User register successful!");

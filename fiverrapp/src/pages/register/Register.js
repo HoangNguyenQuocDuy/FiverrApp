@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import styles from "./register.module.scss";
 import { Logo } from "../../icons";
 import newRequest from "../../utils/newRequest";
-import axios from "axios";
 
 const cx = classNames.bind(styles);
 
@@ -35,22 +34,33 @@ function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(user);
-    console.log(file)
+
+    // console.log(user);
+    // console.log(file);
+
     const formData = new FormData();
-    formData.append('img', file)
+    formData.append("img", file);
+
     try {
-      const upload = await newRequest.post('auth/uploadAvatar', formData)
-      console.log(upload)
-      const register = await newRequest.post('auth/register', { ...user })
-      console.log(register)
-      navigate('/')
-    }catch(err){console.log(err)}
+      const upload = await newRequest.post("auth/upload", formData);
+      console.log(upload.data);
+
+      setUser((prev) => {
+        return { ...prev, img: upload.data };
+      });
+
+      const register = await newRequest.post("auth/register", user);
+      console.log(register);
+      
+      navigate("/");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
     <main className={cx("main")}>
-      <form className={cx("form")} method="post" encType="multipart/form-data"> 
+      <form className={cx("form")} method="post" encType="multipart/form-data">
         <label className={cx("logo")}>
           <Logo width={89} height={27} />
         </label>
@@ -95,12 +105,6 @@ function Register() {
                 name="img"
                 onChange={(e) => {
                   setFile(e.target.files[0]);
-                  setUser((prev) => {
-                    return {
-                      ...prev,
-                      img: e.target.files[0].name,
-                    };
-                  });
                 }}
                 type="file"
               />
@@ -154,7 +158,12 @@ function Register() {
               />
             </label>
 
-            <button onClick={(e) => {handleSubmit(e)}} className={cx("register-btn")}>
+            <button
+              onClick={(e) => {
+                handleSubmit(e);
+              }}
+              className={cx("register-btn")}
+            >
               Register
             </button>
           </div>
