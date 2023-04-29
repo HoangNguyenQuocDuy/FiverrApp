@@ -4,8 +4,11 @@ import jwt from "jsonwebtoken";
 import createError from "../utils/createError";
 const cloudinary = require('cloudinary').v2;
 
-export const handleUploadFile = async (req, res) => {
+export const handleUploadFile = async (req, res, next) => {
   try {
+    if (!req.file) {
+      return res.send('')
+    }
     const result = await cloudinary.uploader.upload(req.file.path);
 
     return res.status(200).send(result.url)

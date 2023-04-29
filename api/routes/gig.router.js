@@ -5,8 +5,8 @@ import { verifyToken } from "../middleware/jwt";
 const gigRoute = express.Router()
 
 gigRoute.post('/',verifyToken , createGig)
-gigRoute.get('/single/:id',verifyToken , getGig)
-gigRoute.post('/:id',verifyToken , deleteGig)
-gigRoute.post('/',verifyToken , getGigs)
+gigRoute.delete('/single/:id',verifyToken , deleteGig)
+gigRoute.get('/:id',verifyToken , getGig)
+gigRoute.get('/',verifyToken , getGigs)
 
 export default gigRoute

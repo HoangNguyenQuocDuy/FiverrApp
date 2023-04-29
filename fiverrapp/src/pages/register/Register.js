@@ -43,15 +43,11 @@ function Register() {
 
     try {
       const upload = await newRequest.post("auth/upload", formData);
-      console.log(upload.data);
+      // console.log(upload.data);
 
-      setUser((prev) => {
-        return { ...prev, img: upload.data };
-      });
-
-      const register = await newRequest.post("auth/register", user);
+      const register = await newRequest.post("auth/register", { ...user, img: upload.data });
       console.log(register);
-      
+
       navigate("/");
     } catch (err) {
       console.log(err);
