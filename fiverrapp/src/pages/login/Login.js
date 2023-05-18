@@ -11,18 +11,22 @@ const cx = classNames.bind(styles);
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [errLogin, setErrLogin] = useState("");
   const usernameRef = useRef();
   const passwordRef = useRef();
-  const navigate = useNavigate()
-  
+  const navigate = useNavigate();
+
   const handleClickSubmit = async (e) => {
     e.preventDefault();
     try {
       const user = await newRequest.post("auth/login", { username, password });
       localStorage.setItem("currentUser", JSON.stringify(user.data));
       console.log(user.data);
-      navigate('/')
-    } catch(err){console.log(err)}
+      navigate("/");
+    } catch (err) {
+      console.log(err.response.data);
+      setErrLogin(err.response.data);
+    }
   };
 
   return (
@@ -63,6 +67,7 @@ function Login() {
             ref={passwordRef}
           />
         </div>
+        {errLogin !== "" && <div className={cx('errMessage')}>{errLogin}</div>}
         <div className={cx("box-btn")}>
           <button onClick={handleClickSubmit} className={cx("button")}>
             Login

@@ -6,15 +6,9 @@ function AppProvider({ children }) {
   const [openGallery, setOpenGallery] = useState(false);
   const [itemsGallery, setItemsGallery] = useState([]);
 
-  const [currentUser, setCurrentUser] = useState({
-    id: 1,
-    userName: "Damn",
-    isSeller: false,
-  })
-
   return (
     <AppContext.Provider
-      value={{ openGallery, setOpenGallery, itemsGallery, setItemsGallery, currentUser }}
+      value={{ openGallery, setOpenGallery, itemsGallery, setItemsGallery }}
     >
       {children}
     </AppContext.Provider>

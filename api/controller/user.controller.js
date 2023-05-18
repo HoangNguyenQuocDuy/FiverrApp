@@ -9,3 +9,10 @@ export const deleteUser = async (req, res, next) => {
   await User.deleteOne(user);
   res.status(200).send("deleted.");
 };
+
+export const getUser = async (req, res, next) => {
+  const user =  await User.findById(req.params.id);
+
+  if (!user) return next(createError(404, "User not found!"))
+  return res.status(200).send(user)
+}

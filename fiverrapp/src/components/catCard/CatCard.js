@@ -6,7 +6,7 @@ const cx = classNames.bind(styles)
 
 function CatCard({ item }) {
   return (
-    <Link to='/gigs?cat=design' className={cx("catCard")}>
+    <Link to='/gigs?cat=ai' className={cx("catCard")}>
       <img className={cx("card-img")} src={item.img} />
       <div className={cx("card-info")}>
         <p className={cx("card-title")}>{item.title}</p>

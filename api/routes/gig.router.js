@@ -6,7 +6,7 @@ const gigRoute = express.Router()
 
 gigRoute.post('/',verifyToken , createGig)
 gigRoute.delete('/single/:id',verifyToken , deleteGig)
-gigRoute.get('/:id',verifyToken , getGig)
-gigRoute.get('/',verifyToken , getGigs)
+gigRoute.get('/:id', getGig)
+gigRoute.get('/', getGigs)
 
 export default gigRoute

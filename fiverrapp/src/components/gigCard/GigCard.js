@@ -2,33 +2,53 @@ import "react-tooltip/dist/react-tooltip.css";
 import { Tooltip } from "react-tooltip";
 import classNames from "classnames/bind";
 import { Link } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 
 import styles from "./gigCard.module.scss";
+import request from "../../utils/newRequest";
 
 const cx = classNames.bind(styles);
 
 function GigCard({ item }) {
+  const { isLoading, error, data } = useQuery({
+    queryKey: [item._id],
+    queryFn: () => request.get(`/users/${item.userId}`).then((res) => res.data),
+  });
+  console.log(data);
+
   return (
     <>
       <div className={cx("gigCard")}>
-        <Link className={cx('main-img')} to="/gig/1234">
-          <img src={item.img} />
+        <Link className={cx("main-img")} to={`/gig/${item._id}`}>
+          <img src={item.images[0]} />
         </Link>
-        <div className={cx("info")}>
-          <div className={cx("user")}>
-            <img src={item.pp} />
-            <Link to="/user?id=123" className={cx("name")}>
-              {item.username}
-            </Link>
-          </div>
-          <Link to="/gig/123" className={cx("desc")}>
-            {item.desc}
-          </Link>
-          <div className={cx("star")}>
-            <i className="fa-solid fa-star"></i>
-            <span>{parseFloat(item.star).toFixed(1)}</span>
-          </div>
-        </div>
+        {isLoading
+          ? "Loading"
+          : error
+          ? "Something went wrong!"
+          : data && (
+              <div className={cx("info")}>
+                <div className={cx("user")}>
+                  <img src={data.img ?? "/imgs/noavatar.png"} />
+                  <Link to="/user?id=123" className={cx("name")}>
+                    {data.username}
+                  </Link>
+                </div>
+                <Link to={`/gigs/${item._id}`} className={cx("desc")}>
+                  {item.shortDesc}
+                </Link>
+                <div className={cx("star")}>
+                  <i className="fa-solid fa-star"></i>
+                  <span>
+                    {!isNaN(parseFloat(item.totalStar / item.starNumber ?? ""))
+                      ? parseFloat(
+                          item.totalStar / item.starNumber ?? ""
+                        ).toFixed(1)
+                      : ""}
+                  </span>
+                </div>
+              </div>
+            )}
         <hr />
         <div className={cx("detail")}>
           <span
@@ -42,7 +62,7 @@ function GigCard({ item }) {
           </span>
           <Tooltip id="heart-tooltip" className={cx("tooltip-heart-icon")} />
 
-          <Link to="/gig/123">
+          <Link to={`/gigs/${item._id}`}>
             <span className={cx("start-at")}>STARTING AT</span>
             <span className={cx("price")}>
               <i className="fa-solid fa-dollar-sign"></i>

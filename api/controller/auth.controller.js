@@ -51,7 +51,6 @@ export const login = async (req, res, next) => {
 
     res.cookie("accessToken", token, { httpOnly: true }).status(200).send(info);
   } catch (err) {
-    // res.status(500).send("Something is wrong!")
     return next(err);
   }
 };

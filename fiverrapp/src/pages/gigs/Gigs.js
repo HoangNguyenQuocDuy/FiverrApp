@@ -1,47 +1,64 @@
 import { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import classNames from "classnames/bind";
+import { useQuery } from "@tanstack/react-query";
+
 import GigCard from "../../components/gigCard/GigCard";
 import { gigs } from "../../data";
 import Breadcrumbs from "../../components/breadcrumbs/Breadcrumbs";
+import request from "../../utils/newRequest";
 
 import styles from "./gigs.module.scss";
 
 const cx = classNames.bind(styles);
 
 function Gigs() {
-  const [sortBy, setSortBy] = useState("Best Selling");
+  const [sortBy, setSortBy] = useState('Best Selling');
+  const [sort, setSort] = useState('totalStar')
   const [openSortOptions, setOpenSortOptions] = useState(false);
 
   const [max, setMax] = useState("");
   const [min, setMin] = useState("");
+  const { search } = useLocation();
 
   const sortOptionsRef = useRef();
   const sortByRef = useRef();
   const inpMaxRef = useRef();
   const inpMinRef = useRef();
 
+  const { isLoading, error, data, refetch } = useQuery({
+    queryKey: ["gigs"],
+    queryFn: () =>
+      request
+        .get(`/gigs${search}&min=${min}&max=${max}&sort=${sort}`)
+        .then((res) => res.data),
+  });
+  console.log(data);
+
   const breadcrumbs = [
     {
       title: <i className="fa-solid fa-house"></i>,
-      path: '/'
+      path: "/",
     },
     {
-      title: 'Graphics & Design',
+      title: "Graphics & Design",
       path: null,
     },
-  ]
+  ];
 
-  const handleChangeSortBy = (title) => {
-    setSortBy(title);
+  const handleChangeSortBy = (option) => {
+    setSortBy(option.title);
+    setSort(option.name)
   };
 
   const sortOptions = [
     {
+      name: "totalStar",
       title: "Best Selling",
     },
 
     {
+      name: "createdAt",
       title: "Newest",
     },
   ];
@@ -55,6 +72,10 @@ function Gigs() {
       setOpenSortOptions(false);
   };
 
+  const handleClickApply = () => {
+    refetch();
+  };
+
   useEffect(() => {
     window.addEventListener("mousedown", handleClickOutsideSortOptions);
 
@@ -62,11 +83,14 @@ function Gigs() {
       window.removeEventListener("mousedown", handleClickOutsideSortOptions);
     };
   }, []);
+  useEffect(() => {
+    refetch();
+  }, [sortBy]);
 
   return (
     <div className={cx("wrapper", "max-width-box")}>
       <div className={cx("header")}>
-        <Breadcrumbs className={cx('breadcrumbs')} items={breadcrumbs} />
+        <Breadcrumbs className={cx("breadcrumbs")} items={breadcrumbs} />
         <h1>AI Artists</h1>
         <p>
           Explore the boundaries of art and technology with Fiverr's AI artists
@@ -116,7 +140,9 @@ function Gigs() {
                 )}
               </span>
             </label>
-            <button className={cx("btn")}>Apply</button>
+            <button onClick={handleClickApply} className={cx("btn")}>
+              Apply
+            </button>
           </div>
           <div className={cx("sort")}>
             <div>Sort by</div>
@@ -135,7 +161,7 @@ function Gigs() {
                 {sortOptions.map((option, idx) => (
                   <li
                     onClick={() => {
-                      handleChangeSortBy(option.title);
+                      handleChangeSortBy(option);
                     }}
                     key={idx}
                   >
@@ -151,11 +177,16 @@ function Gigs() {
         </div>
       </div>
       <ul className={cx("menu")}>
-        {gigs.map((project) => (
-          <li className={cx("item")} key={project.id}>
-            <GigCard item={project} />
-          </li>
-        ))}
+        {isLoading
+          ? "Loading"
+          : error
+          ? "Something is wrong!"
+          : (data &&
+            data.map((project) => (
+              <li className={cx("item")} key={project._id}>
+                <GigCard item={project} />
+              </li>
+            )))}
       </ul>
     </div>
   );

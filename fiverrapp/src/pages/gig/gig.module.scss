@@ -55,7 +55,8 @@
                 margin: 0 1px;
             }
 
-            .starNumber {
+            .order {
+                margin-left: 10px;
                 color: var(--text-ft);
             }
         }
@@ -162,21 +163,7 @@
                 .info {
                     font-size: 1.6rem;
                     margin-left: 20px;
-    
-                    .boxStar {
-                        margin: 4px 0 10px;
-    
-                        .star {
-                            color: var(--light-yellow);
-                            margin: 0 1px;
-                            cursor: pointer;
-                        }
-                        .starNumber {
-                            margin-left: 2px;
-                            color: var(--light-yellow);
-                        }
-                    }
-    
+
                     .contact-btn {
                         padding: 6px 16px;
                         background-color: #fff;
@@ -189,6 +176,10 @@
                             background-color: var(--dark-grey);
                             color: #fff;
                         }
+                    }
+
+                    .boxStar {
+                        margin: 4px 0 10px;
                     }
                 }
             }
@@ -227,6 +218,19 @@
             }
 
         }
+
+        .boxStar {
+            .star {
+                color: var(--light-yellow);
+                margin: 0 1px;
+                cursor: pointer;
+            }
+            .starNumber {
+                margin-left: 2px;
+                color: var(--light-yellow);
+                font-size: 1.6rem;
+            }
+        }
         
         //tách
         .chat-wrapper {
@@ -234,108 +238,6 @@
             .title {
                 font-size: 2rem;
                 margin-top: 60px;
-            }
-
-            .chat-box {
-                padding: 40px 0;
-                border-top: 1px solid #dadbdd;
-                border-bottom: 1px solid #dadbdd;
-
-                .user {
-                    display: flex;
-                    
-
-                    .avatar {
-                        width: 48px;
-                        height: 48px;
-                        margin-right: 16px;
-
-                        img {
-                            width: 100%;
-                            height: 100%;
-                            object-fit: cover;
-                            border-radius: 50%;
-                        }
-                    }
-                    .detail {
-                        display: flex;
-                        flex-direction: column;
-                        justify-content:space-between;
-                        
-
-                        .name {
-                            margin: 0;
-                            font-size: 1.6rem;
-                        }
-                        .nationality {
-                            margin: 0;
-                            font-size: 1.4rem;
-                            color: var(--text-ft);
-
-                            i {
-                                margin-right: 4px;
-                            }
-                        }
-                    }   
-                }
-
-                .review {
-                    margin: 20px 0 0 64px;
-
-                    .star-wrapper {
-                        font-size: 1.6rem;
-
-                        .boxStar {
-                            position: relative;
-                            padding-right: 10px;
-
-                            &::before {
-                                position: absolute;
-                                content: '';
-                                right: 0;
-                                width: 2px;
-                                top: 50%;
-                                transform: translateY(-50%);
-                                height: 20px;
-                                background-color: var(--divide);
-                            }
-
-                            .star {
-                                margin: 0 1px;
-                                color: var(--light-yellow);
-                            }
-                        }
-
-                        .time {
-                            padding-left: 10px;
-                        }
-
-                    }
-
-                    .content {
-                        margin-top: 12px;
-                        font-size: 1.6rem;
-                        color: var(--text-h);
-                    }
-                }
-
-                .evaluation {
-                    margin-left: 64px;
-                    font-size: 1.4rem;
-                    color: var(--text-h);
-
-                    .title {
-                        font-size: 1.4rem;
-                    }
-                    
-                    button {
-                        background-color: #fff;
-                    
-                        &.yes {
-                            padding: 0 12px;
-                        }
-                    }
-                }
             }
         }
     }

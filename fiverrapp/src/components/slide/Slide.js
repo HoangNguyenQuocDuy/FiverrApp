@@ -35,7 +35,7 @@ export default function Slide({
           slickSlideScale && "slideScale"
         }`}
       >
-        {items.map((item) => {
+        {items && items.map((item, idx) => {
           if (component === "catCard")
             return <CatCard item={item} key={item.id} />;
           if (component === "productCard")
@@ -44,8 +44,8 @@ export default function Slide({
             <Img
               className={clImg}
               onClick={onClick}
-              src={item.src}
-              key={item.id}
+              src={item}
+              key={idx}
               ref={imgRef}
             />
           );
