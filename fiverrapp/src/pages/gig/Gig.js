@@ -14,6 +14,7 @@ import Reviews from "../reviews/Reviews";
 const cx = classNames.bind(styles);
 
 function Gig() {
+
   const breadcrumbs = [
     {
       title: <i className="fa-solid fa-house"></i>,
@@ -57,6 +58,8 @@ function Gig() {
     // The query will not execute until the userId exists
     enabled: !!userId,
   });
+
+  const userDesc = dataUser?.desc
 
   const { openGallery, setOpenGallery, itemsGallery, setItemsGallery } =
     useContext(AppContext);
@@ -232,17 +235,9 @@ function Gig() {
                           </ul>
                         )}
                     <hr className={cx("separate")} />
-                    <p className={cx("desc")}>
-                      Hey! I am an AI-powered art seller on Fiverr, providing
-                      custom-made masterpieces that'll take your breath away.
-                      From character portraits to fan art, I use the latest AI
-                      technology to bring your favorite characters to life. With
-                      fast turnaround times, affordable prices, and exceptional
-                      quality. Order now and see the magic unfold!
-                    </p>
+                    <p className={cx("desc")}>{userDesc}</p>
                   </div>
                   <div className={cx("chat-wrapper")}>
-                    <h2 className={cx("title")}>Reviews</h2>
                     {/* Tách */}
                     <Reviews gigId={id} />
                   </div>

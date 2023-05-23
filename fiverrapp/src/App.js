@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import {
   useLocation,
   BrowserRouter as Router,
@@ -6,10 +6,9 @@ import {
   Route,
 } from "react-router-dom";
 import { Fragment } from "react";
-import { publicRoutes, privateRoutes } from "./routers";
+import routes from "./routers";
 import DefaultLayout from "./layouts/DefaultLayout";
 import "./App.css";
-import { AppContext } from "./context/AppProvider";
 import {
   QueryClient,
   QueryClientProvider,
@@ -28,14 +27,12 @@ const Wrapper = ({ children }) => {
 };
 
 function App() {
-  const { currentUser } = useContext(AppContext);
-
   return (
     <QueryClientProvider client={queryClient}>
       <Router>
         <Wrapper>
           <Routes>
-            {publicRoutes.map((route, idx) => {
+            {routes.map((route, idx) => {
               const Page = route.component;
               let Layout = DefaultLayout;
               if (route.layout) Layout = route.layout;
@@ -52,54 +49,11 @@ function App() {
                 />
               );
             })}
-            {currentUser &&
-              privateRoutes.map((route, idx) => {
-                const Page = route.component;
-                let Layout = DefaultLayout;
-                if (route.layout) Layout = route.layout;
-                else if (route.layout === null) Layout = Fragment;
-                return (
-                  <Route
-                    key={idx}
-                    path={route.path}
-                    element={
-                      <Layout>
-                        <Page />
-                      </Layout>
-                    }
-                  />
-                );
-              })}
           </Routes>
         </Wrapper>
       </Router>
     </QueryClientProvider>
   );
-
-  // return (
-  //   <Router>
-  //       <Routes>
-  //         {publicRoutes.map((publicRoute, idx) => {
-  //           const Page = publicRoute.component
-  //           var Layout = DefaultLayout
-
-  //           if (publicRoute.layout) {
-  //             Layout = publicRoute.layout
-  //           } else if(publicRoute.layout === null) {
-  //             Layout = Fragment
-  //           }
-  //           return (
-  //             <Route key={idx} path={publicRoute.path}
-  //               element={
-  //                 <Layout>
-  //                   <Page />
-  //                 </Layout>
-  //             }/>
-  //             )
-  //         })}
-  //       </Routes>
-  //   </Router>
-  // );
 }
 
 export default App;

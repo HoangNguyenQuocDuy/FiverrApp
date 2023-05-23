@@ -11,7 +11,7 @@ import Register from '../pages/register/Register'
 import Gig from '../pages/gig/Gig'
 import SingleLayout from '../layouts/SingleLayout'
 
-const publicRoutes = [
+const routes = [
     {path: routers.home, component: Home},
     {path: routers.addNewGigs, component: AddGigs},
     {path: routers.orders, component: Orders},
@@ -19,12 +19,9 @@ const publicRoutes = [
     {path: routers.login, component: Login, layout: SingleLayout},
     {path: routers.gigs, component: Gigs},
     {path: routers.gig, component: Gig},
-]
-
-const privateRoutes = [
     {path: routers.messages, component: Messages},
     {path: routers.message, component: Message},
     {path: routers.myGigs, component: MyGigs},
 ]
 
-export { publicRoutes, privateRoutes } 
+export default routes

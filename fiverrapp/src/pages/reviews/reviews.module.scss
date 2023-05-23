@@ -1,0 +1,70 @@
+.wrapper {
+
+    .box-createReview {
+
+        .title {
+            font-size: 2rem;
+            margin: 40px 0 20px;
+        }
+
+        .section {
+            display: flex;
+            position: relative;
+            width: 100%;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.6rem;
+    
+            .content {
+                width: 76%;
+                padding: 20px 10px;
+                outline: none;
+                border-radius: 4px;
+                border: 1px solid var(--border-gig); 
+            }
+    
+            .box-stars {
+    
+                .star {
+                    color: var(--text-ft);
+                    padding: 0 2px;
+                    cursor: pointer;
+    
+                    &.active {
+                        color: var(--light-yellow);
+    
+                    }
+                }
+            }
+    
+            .btn-postRv {
+                padding: 12px 18px;
+                background-color: var(--light-green);
+                color: #fff;
+                border-radius: 6px;
+                transition: .1s background-color;
+    
+                &:hover {
+                    background-color: var(--hover-green);
+                }
+            }
+
+            .err {
+                position: absolute;
+                top: 88%;
+                left: 10px;
+                color: var(--err-color);
+                font-size: 1.4rem;
+                margin-top: 10px;
+            }
+        }
+    }
+
+    .reviews {
+
+        .title {
+            font-size: 2rem;
+            margin: 40px 0 20px;
+        }
+    }
+}
