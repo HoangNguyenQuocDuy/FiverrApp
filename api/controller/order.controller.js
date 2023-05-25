@@ -1,5 +1,6 @@
 import Gig from "../models/gig.model";
 import Order from "../models/order.model";
+import createError from "../utils/createError";
 
 export const getOrder = async(req, res, next) => {
   try {
@@ -7,6 +8,8 @@ export const getOrder = async(req, res, next) => {
       ...(req.isSeller ? { sellerId: req.userId } : { buyerId: req.userId }),
       isCompleted: true
     });
+
+    if (!orders) return next(createError(404, 'Not found!!!'))
 
     return res.status(200).send(orders)
   } catch (err) {

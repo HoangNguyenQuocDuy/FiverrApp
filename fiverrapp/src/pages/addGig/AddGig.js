@@ -23,19 +23,19 @@ function AddGigs() {
             <label>
               <span className={cx('title')}>Category</span>
               <select className={cx('cat')} name="cats">
-                <option value="design">Design</option>
-                <option value="web">Web Development</option>
+                <option value="design">AI</option>
+                {/* <option value="web">Web Development</option>
                 <option value="animation">Animation</option>
-                <option value="music">Music</option>
+                <option value="music">Music</option> */}
               </select>
             </label>
           </div>
-          <div>
+          {/* <div>
             <label>
               <span className={cx('title')}>Cover Image</span>
               <input type="file" />
             </label>
-          </div>
+          </div> */}
           <div>
             <label>
               <span className={cx('title')}>Upload Images</span>
@@ -59,7 +59,7 @@ function AddGigs() {
         <div className={cx("details")}>
           <div>
             <label>
-              <span className={cx('title')}>Service Title</span>
+              <span className={cx('title')}>Short Title</span>
               <input type="text" placeholder="e.g. One-page web design" />
             </label>
           </div>

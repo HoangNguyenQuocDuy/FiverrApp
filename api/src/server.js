@@ -33,11 +33,11 @@ const port = process.env.PORT || 3003;
 ConnectDB();
 
 app.use("/api/users", userRoute);
-app.use("/api/conversation", conversationRoute);
-app.use("/api/order", orderRoute);
-app.use("/api/review", reviewRoute);
+app.use("/api/conversations", conversationRoute);
+app.use("/api/orders", orderRoute);
+app.use("/api/reviews", reviewRoute);
 app.use("/api/gigs", gigRoute);
-app.use("/api/message", messageRoute);
+app.use("/api/messages", messageRoute);
 app.use("/api/auth", authRouter);
 
 //custom return error

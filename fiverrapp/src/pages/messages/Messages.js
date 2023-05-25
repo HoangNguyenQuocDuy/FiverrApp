@@ -1,95 +1,89 @@
 import { Link } from "react-router-dom";
-import { useContext } from "react";
 import classNames from "classnames/bind";
+import moment from "moment";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
 import styles from "./messages.module.scss";
-import { AppContext } from "../../context/AppProvider";
+import request from "../../utils/newRequest";
 
 const cx = classNames.bind(styles);
 
 function Messages() {
-  const { currentUser } = useContext(AppContext);
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
-  let message = `Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident
-  maxime cum corporis esse aspernatur laborum dolorum? Animi
-  molestias aliquam, cum nesciunt, aut, ut quam vitae saepe repellat
-  nobis praesentium placeat.`;
+  const { isLoading, error, data } = useQuery({
+    queryKey: ["conversations"],
+    queryFn: () => request.get(`/conversations/`).then((res) => res.data),
+  });
+
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: (id) => {
+      return request.put(`/conversations/${id}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(["conversations"]);
+    }, 
+  });
+
+  const handleRead = (id) => {
+    mutation.mutate(id)
+  }
 
   return (
     <div className={cx("wrapper", "max-width-box")}>
       <h1 className={cx("title")}>Messages</h1>
-      <table className={cx("messages")}>
-        <thead>
-          <tr>
-            {/* <th>{currentUser.isSeller ? "Buyer" : "Seller"}</th> */}
-            <th>Last Message</th>
-            <th>Date</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td className={cx("name")}>John Doe</td>
-            <td className={cx("content")}>
-              <Link className={cx("link")} to="/message/123">
-                {message.substring(0, 100)}...
-              </Link>
-            </td>
-            <td className={cx("time")}>1 hour ago</td>
-            <td className={cx("action")}>
-              <button>Mark as Read</button>
-            </td>
-          </tr>
-          <tr>
-            <td className={cx("name")}>John Doe</td>
-            <td className={cx("content")}>
-              <Link className={cx("link")} to="/message/123">
-                {message.substring(0, 100)}...
-              </Link>
-            </td>
-            <td className={cx("time")}>1 hour ago</td>
-            <td className={cx("action")}>
-              <button>Mark as Read</button>
-            </td>
-          </tr>
-          <tr>
-            <td className={cx("name")}>John Doe</td>
-            <td className={cx("content")}>
-              <Link className={cx("link")} to="/message/123">
-                {message.substring(0, 100)}...
-              </Link>
-            </td>
-            <td className={cx("time")}>1 hour ago</td>
-            <td className={cx("action")}>
-              <button>Mark as Read</button>
-            </td>
-          </tr>
-          <tr>
-            <td className={cx("name")}>John Doe</td>
-            <td className={cx("content")}>
-              <Link className={cx("link")} to="/message/123">
-                {message.substring(0, 100)}...
-              </Link>
-            </td>
-            <td className={cx("time")}>1 hour ago</td>
-            <td className={cx("action")}>
-              <button>Mark as Read</button>
-            </td>
-          </tr>
-          <tr>
-            <td className={cx("name")}>John Doe</td>
-            <td className={cx("content")}>
-              <Link className={cx("link")} to="/message/123">
-                {message.substring(0, 100)}...
-              </Link>
-            </td>
-            <td className={cx("time")}>1 hour ago</td>
-            <td className={cx("action")}>
-              <button>Mark as Read</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      {isLoading ? (
+        "Loading..."
+      ) : error ? (
+        "Something went wrong!"
+      ) : (
+        <table className={cx("messages")}>
+          <thead>
+            <tr>
+              <th>{currentUser.isSeller ? "Buyer" : "Seller"}</th>
+              <th>Last Message</th>
+              <th>Date</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.map((conversation) => {
+              return (
+                <tr
+                  key={conversation.id}
+                  className={cx({
+                    active:
+                      currentUser.isSeller ? !conversation.readBySeller : !conversation.readByBuyer,
+                  })}
+                >
+                  <td className={cx("name")}>
+                    {currentUser.isSeller
+                      ? conversation.sellerId
+                      : conversation.buyerId}
+                  </td>
+                  <td className={cx("content")}>
+                    <Link className={cx("link")} to={`/messages/${conversation.id}`}>
+                      {conversation.lastMessage
+                        ? conversation.lastMessage.substring(0, 100) + "..."
+                        : "New conversation"}
+                    </Link>
+                  </td>
+                  <td className={cx("time")}>
+                    {moment(conversation.updatedAt).fromNow()}
+                  </td>
+                  {(currentUser.isSeller ? !conversation.readBySeller : !conversation.readByBuyer) && (
+                    <td className={cx("action")}>
+                      <button onClick={() => {handleRead(conversation.id)}} >Mark as Read</button>
+                    </td>
+                  )}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 }

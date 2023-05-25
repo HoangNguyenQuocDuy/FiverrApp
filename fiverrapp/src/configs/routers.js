@@ -5,7 +5,7 @@ const routers = {
     addNewGigs: '/add',
     orders: '/orders',
     messages: '/messages',
-    message: '/message/:id',
+    message: '/messages/:id',
     logout: '/logout',
     login: '/login',
     register: '/register',

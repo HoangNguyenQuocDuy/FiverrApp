@@ -8,28 +8,6 @@ import styles from "./review.module.scss";
 const cx = classnames.bind(styles);
 
 function Review({ review }) {
-  const timeNow = moment().format();
-  const date = new Date(review.createdAt);
-
-  const duration = moment.duration(moment(timeNow).diff(moment(date)))._data;
-  console.log(duration);
-  let createdTime;
-  if (duration.years > 0) {
-    if (duration.years > 1) createdTime = duration.years + " years ago";
-    else createdTime = "1 year ago";
-  } else if (duration.months > 0) {
-    if (duration.months > 1) createdTime = duration.months + " months ago";
-    else createdTime = "1 month ago";
-  } else if (duration.days > 0) {
-    if (duration.days > 1) createdTime = duration.days + " days ago";
-    else createdTime = "1 day ago";
-  } else if (duration.hours > 0) {
-    if (duration.hours > 1) createdTime = duration.hours + " hours ago";
-    else createdTime = "1 hours ago";
-  } else if (duration.minutes >= 0) {
-    if (duration.minutes > 1) createdTime = duration.minutes + " minutes ago"
-    else createdTime = "1 minute ago";
-  }
 
   const {
     isLoading,
@@ -75,13 +53,10 @@ function Review({ review }) {
               })}
             <span className={cx("starNumber")}>{review.star}</span>
           </span>
-          <span className={cx("time")}>{createdTime}</span>
+          <span className={cx("time")}>{moment(review.updatedAt).fromNow()}</span>
         </div>
         <p className={cx("content")}>
           {review.desc}
-          {/* Jason really did his thing with my vision, he even finished ahead of
-          schedule which I did not expect, nor did I expect that sheer
-          awesomeness of the out come…. Blown away I am! */}
         </p>
       </div>
       <div className={cx("evaluation")}>

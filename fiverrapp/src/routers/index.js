@@ -10,6 +10,7 @@ import Orders from '../pages/orders/Orders'
 import Register from '../pages/register/Register'
 import Gig from '../pages/gig/Gig'
 import SingleLayout from '../layouts/SingleLayout'
+import NoFooter from '../layouts/NoFooterLayout'
 
 const routes = [
     {path: routers.home, component: Home},
@@ -20,7 +21,7 @@ const routes = [
     {path: routers.gigs, component: Gigs},
     {path: routers.gig, component: Gig},
     {path: routers.messages, component: Messages},
-    {path: routers.message, component: Message},
+    {path: routers.message, component: Message, layout: NoFooter},
     {path: routers.myGigs, component: MyGigs},
 ]
 

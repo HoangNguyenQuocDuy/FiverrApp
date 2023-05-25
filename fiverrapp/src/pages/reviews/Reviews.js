@@ -15,7 +15,7 @@ function Reviews({ gigId }) {
 
   const { isLoading, error, data } = useQuery({
     queryKey: ["reviews"],
-    queryFn: () => request.get(`/review/${gigId}`).then((res) => res.data),
+    queryFn: () => request.get(`/reviews/${gigId}`).then((res) => res.data),
   });
 
   const dataReverse = data&&data.toReversed();
@@ -28,7 +28,7 @@ function Reviews({ gigId }) {
 
   const mutation = useMutation({
     mutationFn: (review) => {
-      return request.post("/review", review);
+      return request.post("/reviews", review);
     },
     onSuccess: () => {
       queryClient.invalidateQueries(["reviews"]);

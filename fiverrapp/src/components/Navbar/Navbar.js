@@ -46,7 +46,6 @@ function Navbar() {
       window.removeEventListener("mousedown", handleClickOutsideOptions);
     };
   }, []);
-  console.log(optionsRef);
 
   const handleOpenOptions = () => {
     setOpen(!open);

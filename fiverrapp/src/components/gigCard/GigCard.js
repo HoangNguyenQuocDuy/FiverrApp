@@ -29,7 +29,7 @@ function GigCard({ item }) {
           : data && (
               <div className={cx("info")}>
                 <div className={cx("user")}>
-                  <img src={data.img ?? "/imgs/noavatar.png"} />
+                  <img src={data.img !== '' ? data.img : "/imgs/noavatar.png"} />
                   <Link to="/user?id=123" className={cx("name")}>
                     {data.username}
                   </Link>
