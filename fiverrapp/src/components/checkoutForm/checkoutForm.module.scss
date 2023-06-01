@@ -1,0 +1,21 @@
+.form {
+    font-size: 1.6rem;
+
+    .button {
+        margin: 16px 0 12px;
+        padding: 10px 20px;
+        font-size: 1.6rem;
+        color: #fff;
+        background-color: var(--hover-green);
+        transition: background-color .15s;
+        border-radius: 4px;
+    
+        &:hover {
+            background-color: var(--light-green);
+        }
+    }
+
+    .message {
+        color: var(--err-color)
+    }
+}

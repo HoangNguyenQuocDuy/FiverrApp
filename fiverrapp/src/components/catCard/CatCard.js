@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import classNames from 'classnames/bind'
 import { Link } from 'react-router-dom'
 import styles from "./catCard.module.scss";
@@ -16,4 +17,4 @@ function CatCard({ item }) {
   );
 }
 
-export default CatCard;
+export default memo(CatCard);

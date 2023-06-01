@@ -1,5 +1,5 @@
 import classNames from "classnames/bind";
-import { useRef } from "react";
+import { memo, useRef } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -11,7 +11,7 @@ import "./slide.scss";
 
 const cx = classNames.bind(styles);
 
-export default function Slide({
+ function Slide({
   items,
   settings,
   component,
@@ -79,3 +79,5 @@ export default function Slide({
     </div>
   );
 }
+
+export default memo(Slide)

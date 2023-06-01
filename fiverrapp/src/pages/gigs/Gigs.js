@@ -4,7 +4,6 @@ import classNames from "classnames/bind";
 import { useQuery } from "@tanstack/react-query";
 
 import GigCard from "../../components/gigCard/GigCard";
-import { gigs } from "../../data";
 import Breadcrumbs from "../../components/breadcrumbs/Breadcrumbs";
 import request from "../../utils/newRequest";
 
@@ -13,8 +12,8 @@ import styles from "./gigs.module.scss";
 const cx = classNames.bind(styles);
 
 function Gigs() {
-  const [sortBy, setSortBy] = useState('Best Selling');
-  const [sort, setSort] = useState('totalStar')
+  const [sortBy, setSortBy] = useState("Best Selling");
+  const [sort, setSort] = useState("totalStar");
   const [openSortOptions, setOpenSortOptions] = useState(false);
 
   const [max, setMax] = useState("");
@@ -48,7 +47,7 @@ function Gigs() {
 
   const handleChangeSortBy = (option) => {
     setSortBy(option.title);
-    setSort(option.name)
+    setSort(option.name);
   };
 
   const sortOptions = [
@@ -181,12 +180,12 @@ function Gigs() {
           ? "Loading"
           : error
           ? "Something is wrong!"
-          : (data &&
+          : data &&
             data.map((project) => (
               <li className={cx("item")} key={project._id}>
                 <GigCard item={project} />
               </li>
-            )))}
+            ))}
       </ul>
     </div>
   );

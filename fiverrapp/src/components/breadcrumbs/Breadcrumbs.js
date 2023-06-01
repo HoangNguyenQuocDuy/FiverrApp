@@ -1,3 +1,4 @@
+import { memo } from "react";
 import classNames from "classnames/bind";
 import { Link } from "react-router-dom";
 
@@ -37,4 +38,4 @@ function Breadcrumbs({ items, className }) {
   );
 }
 
-export default Breadcrumbs;
+export default memo(Breadcrumbs);

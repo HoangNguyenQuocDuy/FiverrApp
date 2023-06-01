@@ -11,6 +11,8 @@ import Register from '../pages/register/Register'
 import Gig from '../pages/gig/Gig'
 import SingleLayout from '../layouts/SingleLayout'
 import NoFooter from '../layouts/NoFooterLayout'
+import Pay from '../pages/Pay/Pay'
+import Success from '../pages/Success/Success'
 
 const routes = [
     {path: routers.home, component: Home},
@@ -23,6 +25,8 @@ const routes = [
     {path: routers.messages, component: Messages},
     {path: routers.message, component: Message, layout: NoFooter},
     {path: routers.myGigs, component: MyGigs},
+    {path: routers.pay, component: Pay},
+    {path: routers.success, component: Success},
 ]
 
 export default routes

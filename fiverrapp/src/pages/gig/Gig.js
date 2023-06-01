@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import classNames from "classnames/bind";
 import { useQuery } from "@tanstack/react-query";
 
@@ -14,7 +14,6 @@ import Reviews from "../reviews/Reviews";
 const cx = classNames.bind(styles);
 
 function Gig() {
-
   const breadcrumbs = [
     {
       title: <i className="fa-solid fa-house"></i>,
@@ -59,7 +58,7 @@ function Gig() {
     enabled: !!userId,
   });
 
-  const userDesc = dataUser?.desc
+  const userDesc = dataUser?.desc;
 
   const { openGallery, setOpenGallery, itemsGallery, setItemsGallery } =
     useContext(AppContext);
@@ -274,7 +273,9 @@ function Gig() {
                         );
                       })}
                   </ul>
-                  <button className={cx("btn-continue")}>Continue</button>
+                  <Link to={`/pay/${id}`}>
+                    <button className={cx("btn-continue")}>Continue</button>
+                  </Link>
                 </div>
               </div>
               {openGallery && (

@@ -1,4 +1,4 @@
-import { useRef, useEffect, useContext } from "react";
+import { useRef, useEffect, useContext, memo } from "react";
 import classNames from "classnames/bind";
 
 import styles from "./gallery.module.scss";
@@ -55,4 +55,4 @@ function Gallery({ items, setting }) {
   );
 }
 
-export default Gallery;
+export default memo(Gallery);

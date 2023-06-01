@@ -12,6 +12,8 @@ const routers = {
     messages: '/messages',
     orders: '/orders',
     myGigs: '/myGigs',
+    pay: '/pay/:id',
+    success: '/success'
 }
 
 export default routers

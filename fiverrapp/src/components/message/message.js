@@ -3,6 +3,7 @@ import request from "../../utils/newRequest";
 import classNames from "classnames/bind";
 
 import styles from "./message.module.scss";
+import { memo } from "react";
 
 const cx = classNames.bind(styles);
 
@@ -19,6 +20,8 @@ function MessageItem({ data, pos, noImg }) {
     enabled: !!data.userId,
   });
 
+  dataUser && console.log(dataUser.img)
+
   return (
     <div className={cx("item", { owner: currentUser._id === data.userId })}>
       {isLoadingUser
@@ -28,7 +31,7 @@ function MessageItem({ data, pos, noImg }) {
         : dataUser && (
             <>
               <div className={cx("avatar")}>
-                {!noImg && <img src={dataUser.img !== '' ? dataUser.img : "/imgs/noavatar.png"} alt="avatar" />}
+                {!noImg && <img src={(dataUser.img !== '' && dataUser.img !== undefined)? dataUser.img : "/imgs/noavatar.png"} alt="avatar" />}
               </div>
               <div className={cx("wrapper-content")}>
                 <p className={cx("content", pos)}>
@@ -41,4 +44,4 @@ function MessageItem({ data, pos, noImg }) {
   );
 }
 
-export default MessageItem;
+export default memo(MessageItem);

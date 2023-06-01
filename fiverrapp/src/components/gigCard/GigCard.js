@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import styles from "./gigCard.module.scss";
 import request from "../../utils/newRequest";
+import { memo } from "react";
 
 const cx = classNames.bind(styles);
 
@@ -29,7 +30,7 @@ function GigCard({ item }) {
           : data && (
               <div className={cx("info")}>
                 <div className={cx("user")}>
-                  <img src={data.img !== '' ? data.img : "/imgs/noavatar.png"} />
+                  <img src={(data.img !== '' && data.img !== undefined) ? data.img : "/imgs/noavatar.png"} />
                   <Link to="/user?id=123" className={cx("name")}>
                     {data.username}
                   </Link>
@@ -75,4 +76,4 @@ function GigCard({ item }) {
   );
 }
 
-export default GigCard;
+export default memo(GigCard);

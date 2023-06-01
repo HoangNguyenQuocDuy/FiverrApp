@@ -85,7 +85,7 @@ function Navbar() {
           <li>Explore</li>
           <li>English</li>
           {currentUser && !currentUser.isSeller && <li>Become a Seller</li>}
-          {currentUser && !currentUser && <li>Sign in</li>}
+          {!currentUser && <li>Sign in</li>}
           {!currentUser && (
             <li>
               <button onClick={() => {navigate('/login')}} className={cx("join-btn")}>Join</button>
@@ -99,18 +99,18 @@ function Navbar() {
             >
               <img
                 className={cx("avatar")}
-                src={(currentUser.img!=="" && currentUser.img) || "./imgs/noavatar.png"}
+                src={(currentUser.img!== '' &&  currentUser.img !== undefined) ? currentUser.img : "/imgs/noavatar.png"}
                 alt="avatar"
               />
               <span className={cx("userName")}>{currentUser.username}</span>
               {open && (
                 <div ref={optionsRef} className={cx("options")}>
-                  <Link to={routers.gigs} className={cx("item")}>
+                  <Link to='/gigs?cat=ai' className={cx("item")}>
                     Gigs
                   </Link>
-                  <Link to={routers.addNewGigs} className={cx("item")}>
+                  {currentUser.isSeller && <Link to={routers.addNewGigs} className={cx("item")}>
                     Add New Gig
-                  </Link>
+                  </Link>}
                   <Link to={routers.orders} className={cx("item")}>
                     Orders
                   </Link>

@@ -24,12 +24,12 @@ function Messages() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries(["conversations"]);
-    }, 
+    },
   });
 
   const handleRead = (id) => {
-    mutation.mutate(id)
-  }
+    mutation.mutate(id);
+  };
 
   return (
     <div className={cx("wrapper", "max-width-box")}>
@@ -54,8 +54,9 @@ function Messages() {
                 <tr
                   key={conversation.id}
                   className={cx({
-                    active:
-                      currentUser.isSeller ? !conversation.readBySeller : !conversation.readByBuyer,
+                    active: currentUser.isSeller
+                      ? !conversation.readBySeller
+                      : !conversation.readByBuyer,
                   })}
                 >
                   <td className={cx("name")}>
@@ -64,18 +65,31 @@ function Messages() {
                       : conversation.buyerId}
                   </td>
                   <td className={cx("content")}>
-                    <Link className={cx("link")} to={`/messages/${conversation.id}`}>
-                      {conversation.lastMessage
+                    <Link
+                      className={cx("link")}
+                      to={`/messages/${conversation.id}`}
+                    >
+                      {!conversation.lastMessage
+                        ? "New conversation"
+                        : conversation.lastMessage.length > 100
                         ? conversation.lastMessage.substring(0, 100) + "..."
-                        : "New conversation"}
+                        : conversation.lastMessage}
                     </Link>
                   </td>
                   <td className={cx("time")}>
                     {moment(conversation.updatedAt).fromNow()}
                   </td>
-                  {(currentUser.isSeller ? !conversation.readBySeller : !conversation.readByBuyer) && (
+                  {(currentUser.isSeller
+                    ? !conversation.readBySeller
+                    : !conversation.readByBuyer) && (
                     <td className={cx("action")}>
-                      <button onClick={() => {handleRead(conversation.id)}} >Mark as Read</button>
+                      <button
+                        onClick={() => {
+                          handleRead(conversation.id);
+                        }}
+                      >
+                        Mark as Read
+                      </button>
                     </td>
                   )}
                 </tr>

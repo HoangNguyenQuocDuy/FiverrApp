@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import { useState, useRef } from "react";
+import { useState, useRef, memo } from "react";
 import styles from "./featured.module.scss";
 
 const cx = classNames.bind(styles)
@@ -53,4 +53,4 @@ function Featured() {
   );
 }
 
-export default Featured;
+export default memo(Featured);
