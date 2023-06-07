@@ -5,6 +5,7 @@ import classNames from "classnames/bind";
 import request from "../../utils/newRequest";
 import styles from "./reviews.module.scss";
 import Review from "../review/Review";
+import useFetchData from "../../customHooks/useFetchData";
 
 const cx = classNames.bind(styles);
 
@@ -12,11 +13,8 @@ function Reviews({ gigId }) {
   const [star, setStart] = useState(0);
   const [evaluation, setEvaluation] = useState("");
   const queryClient = useQueryClient();
-
-  const { isLoading, error, data } = useQuery({
-    queryKey: ["reviews"],
-    queryFn: () => request.get(`/reviews/${gigId}`).then((res) => res.data),
-  });
+  
+  const [isLoading, error, data] = useFetchData('reviews', `/reviews/${gigId}`);
 
   const dataReverse = data&&data.toReversed();
 

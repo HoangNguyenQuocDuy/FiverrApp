@@ -7,12 +7,14 @@ import Breadcrumbs from "../../components/breadcrumbs/Breadcrumbs";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import request from "../../utils/newRequest";
 import MessageItem from "../../components/message/message";
+import useFetchData from "../../customHooks/useFetchData";
+import getCurrentUser from "../../utils/getCurrentUser";
 
 const cx = classNames.bind(styles);
 
 function Message() {
   const { id } = useParams();
-  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  const currentUser = getCurrentUser()
   let chatUserId = currentUser.isSeller
     ? id.substring(currentUser._id.length)
     : id.substring(0, id.indexOf(currentUser._id));
@@ -20,19 +22,11 @@ function Message() {
   const inpRef = useRef();
   const scrollBottomRef = useRef();
 
-  const { isLoading, error, data } = useQuery({
-    queryKey: ["message"],
-    queryFn: () => request.get(`/messages/${id}`).then((res) => res.data),
-  });
+  const [ isLoading, error, data ] = useFetchData(["conversations", id], `/messages/${id}`);
 
-  const {
-    isLoading: isLoadingChatUser,
-    error: errorChatUser,
-    data: dataChatUser,
-  } = useQuery({
-    queryKey: [chatUserId],
-    queryFn: () => request.get(`/users/${chatUserId}`).then((res) => res.data),
-  });
+  const [ isLoadingChatUser, errorChatUser, dataChatUser ] = useFetchData(['user', chatUserId], `/users/${chatUserId}`)
+
+  console.log(chatUserId)
 
   let breadcrumbs = [
     {

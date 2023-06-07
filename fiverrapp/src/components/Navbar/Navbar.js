@@ -5,7 +5,7 @@ import { Link, useLocation } from "react-router-dom";
 import routers from "../../configs/routers";
 import styles from "./navbar.module.scss";
 import newRequest from "../../utils/newRequest";
-import { Logo } from "../../icons"; 
+import { Logo } from "../../icons";
 
 const cx = classNames.bind(styles);
 
@@ -18,7 +18,7 @@ function Navbar() {
   const [open, setOpen] = useState(false);
 
   const [openLink, setOpenLink] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const optionsRef = useRef();
   const userOptionsRef = useRef();
@@ -55,7 +55,7 @@ function Navbar() {
     try {
       await newRequest.post("auth/logout");
       localStorage.setItem("currentUser", null);
-      navigate("/")
+      navigate("/");
     } catch (err) {}
   };
   return (
@@ -70,7 +70,7 @@ function Navbar() {
           <i className="fa-solid fa-list"></i>
         </span>
         <Link className={cx("logo")} to={routers.home}>
-        <Logo width={89} height={27} />
+          <Logo width={89} height={27} />
         </Link>
         <ul className={cx("links", { hide: !openLink })}>
           <span
@@ -88,7 +88,14 @@ function Navbar() {
           {!currentUser && <li>Sign in</li>}
           {!currentUser && (
             <li>
-              <button onClick={() => {navigate('/login')}} className={cx("join-btn")}>Join</button>
+              <button
+                onClick={() => {
+                  navigate("/login");
+                }}
+                className={cx("join-btn")}
+              >
+                Join
+              </button>
             </li>
           )}
           {currentUser && (
@@ -99,18 +106,26 @@ function Navbar() {
             >
               <img
                 className={cx("avatar")}
-                src={(currentUser.img!== '' &&  currentUser.img !== undefined) ? currentUser.img : "/imgs/noavatar.png"}
+                src={
+                  currentUser.img !== "" && currentUser.img !== undefined
+                    ? currentUser.img
+                    : "/imgs/noavatar.png"
+                }
                 alt="avatar"
               />
               <span className={cx("userName")}>{currentUser.username}</span>
               {open && (
                 <div ref={optionsRef} className={cx("options")}>
-                  <Link to='/gigs?cat=ai' className={cx("item")}>
-                    Gigs
-                  </Link>
-                  {currentUser.isSeller && <Link to={routers.addNewGigs} className={cx("item")}>
-                    Add New Gig
-                  </Link>}
+                  {currentUser.isSeller && (
+                    <Link to="/mygigs" className={cx("item")}>
+                      My gigs
+                    </Link>
+                  )}
+                  {currentUser.isSeller && (
+                    <Link to={routers.addNewGigs} className={cx("item")}>
+                      Add New Gig
+                    </Link>
+                  )}
                   <Link to={routers.orders} className={cx("item")}>
                     Orders
                   </Link>

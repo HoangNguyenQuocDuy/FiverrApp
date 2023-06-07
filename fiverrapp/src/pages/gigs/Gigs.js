@@ -8,6 +8,7 @@ import Breadcrumbs from "../../components/breadcrumbs/Breadcrumbs";
 import request from "../../utils/newRequest";
 
 import styles from "./gigs.module.scss";
+import useFetchData from "../../customHooks/useFetchData";
 
 const cx = classNames.bind(styles);
 
@@ -24,14 +25,8 @@ function Gigs() {
   const sortByRef = useRef();
   const inpMaxRef = useRef();
   const inpMinRef = useRef();
-
-  const { isLoading, error, data, refetch } = useQuery({
-    queryKey: ["gigs"],
-    queryFn: () =>
-      request
-        .get(`/gigs${search}&min=${min}&max=${max}&sort=${sort}`)
-        .then((res) => res.data),
-  });
+  
+  const [ isLoading, error, data, refetch ] = useFetchData('gigs', `/gigs${search}&min=${min}&max=${max}&sort=${sort}`)
   console.log(data);
 
   const breadcrumbs = [

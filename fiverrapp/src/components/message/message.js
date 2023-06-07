@@ -4,23 +4,15 @@ import classNames from "classnames/bind";
 
 import styles from "./message.module.scss";
 import { memo } from "react";
+import useFetchData from "../../customHooks/useFetchData";
+import getCurrentUser from "../../utils/getCurrentUser";
 
 const cx = classNames.bind(styles);
 
 function MessageItem({ data, pos, noImg }) {
-  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  const currentUser = getCurrentUser();
 
-  const {
-    isLoading: isLoadingUser,
-    error: errorUser,
-    data: dataUser,
-  } = useQuery({
-    queryKey: [data.userId],
-    queryFn: () => request.get(`/users/${data.userId}`).then((res) => res.data),
-    enabled: !!data.userId,
-  });
-
-  dataUser && console.log(dataUser.img)
+  const [ isLoadingUser, errorUser, dataUser ] = useFetchData(['user', data.userId], `/users/${data.userId}`)
 
   return (
     <div className={cx("item", { owner: currentUser._id === data.userId })}>

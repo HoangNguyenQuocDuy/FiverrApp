@@ -10,6 +10,7 @@ import Gallery from "../../components/gallery/Gallery";
 import { AppContext } from "../../context/AppProvider";
 import request from "../../utils/newRequest";
 import Reviews from "../reviews/Reviews";
+import useFetchData from "../../customHooks/useFetchData";
 
 const cx = classNames.bind(styles);
 
@@ -41,18 +42,22 @@ function Gig() {
 
   const { id } = useParams();
 
-  const { isLoading, error, data, refetch } = useQuery({
-    queryKey: ["gig"],
-    queryFn: () => request.get(`/gigs/${id}`).then((res) => res.data),
-  });
+  const [isLoading, error, data ] = useFetchData(
+    ["gigs", id],
+    `/gigs/${id}`
+  );
 
   const userId = data?.userId;
+
+  // const [ isLoadingUser, errorUser, dataUser, refetch ] = useFetchData(
+  //   ["user", userId], `/users/${userId}`
+  // );
   const {
     isLoading: isLoadingUser,
     error: errorUser,
     data: dataUser,
   } = useQuery({
-    queryKey: ["user"],
+    queryKey: ["user", userId],
     queryFn: () => request.get(`/users/${userId}`).then((res) => res.data),
     // The query will not execute until the userId exists
     enabled: !!userId,
@@ -93,7 +98,7 @@ function Gig() {
                     : dataUser && (
                         <>
                           <div className={cx("avatar")}>
-                            <img src={dataUser.img ?? "/imgs/noavatar.png"} />
+                            <img src={dataUser.img !== '' && dataUser.img !== undefined ? dataUser.img : "/imgs/noavatar.png"} />
                           </div>
                           <span className={cx("name")}>
                             {dataUser.username}
@@ -172,7 +177,7 @@ function Gig() {
                   ) : (
                     <div className={cx("contact")}>
                       <div className={cx("avatar")}>
-                        <img src={dataUser.img ?? "/imgs/noavatar.png"} />
+                        <img src={dataUser.img !== '' && dataUser.img !== undefined ? dataUser.img : "/imgs/noavatar.png"} />
                       </div>
                       <div className={cx("info")}>
                         <h4>{dataUser.username}</h4>

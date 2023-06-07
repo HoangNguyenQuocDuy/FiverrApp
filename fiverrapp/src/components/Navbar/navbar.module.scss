@@ -115,10 +115,10 @@
                     content: '';
                     top: -38px;
                     right: 6px;
-                    border-color: transparent transparent #fff transparent ;
+                    border-color: transparent transparent #ffffff transparent ;
                     border-width: 24px;
                     border-style: solid;
-                    
+                    z-index: -1;
                 }
                 
                 .item {
@@ -126,6 +126,7 @@
                     padding: 8px 20px;
                     font-size: 1.5rem;
                     color: var(--dark-grey);
+                    z-index: 2;
 
                     &:hover {
                         text-decoration: none;

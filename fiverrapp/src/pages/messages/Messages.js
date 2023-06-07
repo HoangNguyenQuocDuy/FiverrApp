@@ -5,16 +5,15 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
 import styles from "./messages.module.scss";
 import request from "../../utils/newRequest";
+import useFetchData from "../../customHooks/useFetchData";
+import getCurrentUser from "../../utils/getCurrentUser";
 
 const cx = classNames.bind(styles);
 
 function Messages() {
-  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  const currentUser = getCurrentUser();
 
-  const { isLoading, error, data } = useQuery({
-    queryKey: ["conversations"],
-    queryFn: () => request.get(`/conversations/`).then((res) => res.data),
-  });
+  const [ isLoading, error, data ] = useFetchData("conversations", `/conversations`);
 
   const queryClient = useQueryClient();
 

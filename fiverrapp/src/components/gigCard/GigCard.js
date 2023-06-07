@@ -7,16 +7,13 @@ import { useQuery } from "@tanstack/react-query";
 import styles from "./gigCard.module.scss";
 import request from "../../utils/newRequest";
 import { memo } from "react";
+import useFetchData from "../../customHooks/useFetchData";
 
 const cx = classNames.bind(styles);
 
 function GigCard({ item }) {
-  const { isLoading, error, data } = useQuery({
-    queryKey: [item._id],
-    queryFn: () => request.get(`/users/${item.userId}`).then((res) => res.data),
-  });
-  console.log(data);
-
+  const [ isLoading, error, data ] = useFetchData(item._id, `/users/${item.userId}`)
+  
   return (
     <>
       <div className={cx("gigCard")}>

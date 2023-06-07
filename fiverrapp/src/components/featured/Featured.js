@@ -1,6 +1,7 @@
 import classNames from 'classnames/bind';
 import { useState, useRef, memo } from "react";
 import styles from "./featured.module.scss";
+import { useNavigate } from 'react-router-dom';
 
 const cx = classNames.bind(styles)
 
@@ -8,9 +9,15 @@ function Featured() {
   const searchContentRef = useRef();
   const [searchContent, setSearchContent] = useState("");
 
+  const navigate = useNavigate()
+
   const handleChangeSearchContent = (e) => {
     setSearchContent(e.target.value);
   };
+
+  const handleClickSearch = ()=> {
+    navigate(`/gigs?search=${searchContent}`)
+  }
 
   return (
     <div className={cx("max-width-box", 'wrapper')}>
@@ -34,7 +41,7 @@ function Featured() {
               </span>
             )}
           </label>
-          <button className={cx("submit-btn")} type="submit">
+          <button className={cx("submit-btn")} onClick={handleClickSearch}>
             Search
           </button>
         </form>

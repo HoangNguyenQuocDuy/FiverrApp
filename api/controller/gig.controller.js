@@ -13,7 +13,7 @@ export const createGig = async (req, res, next) => {
   }
 };
 
-export const getGig = async (req, res, next) => {
+export const getGigsById = async (req, res, next) => {
   try {
     const gig = await Gig.findById(req.params.id);
     if (!gig) return next(createError(404, "Gig not found!"));
@@ -30,7 +30,7 @@ export const deleteGig = async (req, res, next) => {
     if (gig.userId !== req.userId)
       return next(createError(403, "You can delete only your gigs!"));
 
-    await Gig.findOneAndDelete(req.params.id);
+    await Gig.findByIdAndDelete(req.params.id);
     res.status(200).send("Gig has been deleted!");
   } catch (err) {
     next(err);
@@ -44,7 +44,8 @@ export const getGigs = async (req, res, next) => {
     ...((q.max || q.min) && {
       price: { ...(q.min && { $gt: q.min }), ...(q.max && { $lt: q.max }) },
     }),
-    ...(q.search && { title: { $regex: q.search, $options: "i" } }),
+    ...(q.search && { shortDesc: { $regex: q.search, $options: "i" } }),
+    ...(q.userId && { userId: { $regex: q.userId } })
   };
   try {
     const gigs = await Gig.find(filters).sort({ [ q.sort ]: -1 });

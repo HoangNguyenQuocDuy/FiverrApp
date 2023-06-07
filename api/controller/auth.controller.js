@@ -2,19 +2,41 @@ import User from "../models/user.model";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import createError from "../utils/createError";
-const cloudinary = require('cloudinary').v2;
+const cloudinary = require("cloudinary").v2;
 
 export const handleUploadFile = async (req, res, next) => {
   try {
     if (!req.file) {
-      return res.send('')
+      return res.send("");
     }
-    const result = await cloudinary.uploader.upload(req.file.path);
+    const public_id = `fiverr/${req.file.filename}`;
+    const result = await cloudinary.uploader.upload(req.file.path, {
+      public_id,
+    });
 
-    return res.status(200).send(result.url)
+    return res.status(200).send(result.url);
   } catch (err) {
     console.log(err);
-    res.status(404).send('file not found!');
+    res.status(404).send("file not found!");
+  }
+};
+
+export const uploadMultiFiles = async (req, res, next) => {
+  try {
+    if (!req.files) {
+      return res.send("don't work!");
+    }
+    const images = await Promise.all([...req.files].map(async (file) => {
+      const public_id = `fiverr/${file.filename}`;
+      const result = await cloudinary.uploader.upload(file.path, { public_id });
+
+      return result.url
+    }))
+
+    return res.status(200).send(images);
+  } catch (err) {
+    console.log(err);
+    res.status(404).send("file not found!");
   }
 };
 

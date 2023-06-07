@@ -35,18 +35,13 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // console.log(user);
-    // console.log(file);
-
     const formData = new FormData();
     formData.append("img", file);
 
     try {
       const upload = await newRequest.post("auth/upload", formData);
-      // console.log(upload.data);
 
       const register = await newRequest.post("auth/register", { ...user, img: upload.data });
-      console.log(register);
 
       navigate("/");
     } catch (err) {

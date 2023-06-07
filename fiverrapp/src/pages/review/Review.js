@@ -4,20 +4,13 @@ import moment from "moment";
 
 import request from "../../utils/newRequest";
 import styles from "./review.module.scss";
+import useFetchData from "../../customHooks/useFetchData";
 
 const cx = classnames.bind(styles);
 
 function Review({ review }) {
 
-  const {
-    isLoading,
-    error,
-    data: user,
-  } = useQuery({
-    queryKey: [review._id],
-    queryFn: () =>
-      request.get(`/users/${review.userId}`).then((res) => res.data),
-  });
+  const [isLoading, error, user] = useFetchData([ 'reviews', review._id ], `/users/${review.userId}`);
 
   return (
     <div className={cx("chat-box")}>

@@ -4,15 +4,14 @@ import { useQuery } from "@tanstack/react-query";
 
 import styles from "./orders.module.scss";
 import request from "../../utils/newRequest";
+import useFetchData from '../../customHooks/useFetchData';
+import getCurrentUser from '../../utils/getCurrentUser';
 
 const cx = classNames.bind(styles);
 function Orders() {
-  const { isLoading, error, data } = useQuery({
-    queryKey: ["orders"],
-    queryFn: () => request.get(`/orders`).then((res) => res.data),
-  });
+  const [ isLoading, error, data ] = useFetchData("orders", '/orders');
 
-  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  const currentUser = getCurrentUser();
 
   const navigate = useNavigate()
 
