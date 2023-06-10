@@ -43,7 +43,7 @@ function Gig() {
   const { id } = useParams();
 
   const [isLoading, error, data ] = useFetchData(
-    ["gigs", id],
+    ["gig", id],
     `/gigs/${id}`
   );
 
@@ -107,7 +107,7 @@ function Gig() {
                       )}
                   <div className={cx("divide")}></div>
                   <div className={cx("boxStar")}>
-                    {Array(Math.round(data.totalStar / data.starNumber))
+                    {Array(Math.round((data.totalStar / data.starNumber) > 0 ? data.totalStar / data.starNumber : 1))
                       .fill()
                       .map((item, idx) => {
                         return (
@@ -134,37 +134,6 @@ function Gig() {
                   items={data.images}
                   component={null}
                 />
-                {/* <div className={cx("wrp-price")}>
-                  <div className={cx("price-box")}>
-                    <p>{data.shortTitle}</p>
-                    <div className={cx("price")}>
-                      <i className="fa-solid fa-dollar-sign"></i> {data.price}
-                    </div>
-                  </div>
-                  <div className={cx("additional")}>
-                    <div className={cx("delivery")}>
-                      <i className="fa-solid fa-clock-rotate-left"></i>
-                      {data.deliveryTime} Days Delivery
-                    </div>
-                    <div className={cx("revision")}>
-                      <i className="fa-solid fa-repeat"></i>
-                      {data.revisionNumber} Revisions
-                    </div>
-                  </div>
-                  <ul className={cx("features")}>
-                    {data.features && data.features.map((item, idx) => {
-                      return (
-                        <li key={idx} className={cx("feature")}>
-                          <span className={cx("check-icon")}>
-                            <i className="fa-solid fa-check"></i>
-                          </span>
-                          {item}
-                        </li>
-                      );
-                    })}
-                  </ul>
-                  <button className={cx("btn-continue")}>Continue</button>
-                </div> */}
                 <div className={cx("aboutGig")}>
                   <h2 className={cx("title")}>About this gig</h2>
                   <p className={cx("content")}>{data.desc}</p>
@@ -182,7 +151,7 @@ function Gig() {
                       <div className={cx("info")}>
                         <h4>{dataUser.username}</h4>
                         <div className={cx("boxStar")}>
-                          {Array(Math.round(data.totalStar / data.starNumber))
+                          {Array(Math.round((data.totalStar / data.starNumber) > 0 ? data.totalStar / data.starNumber : 1))
                             .fill()
                             .map((item, idx) => {
                               return (
@@ -242,7 +211,7 @@ function Gig() {
                     <p className={cx("desc")}>{userDesc}</p>
                   </div>
                   <div className={cx("chat-wrapper")}>
-                    {/* Tách */}
+                    {/* Tách  */}
                     <Reviews gigId={id} />
                   </div>
                 </div>

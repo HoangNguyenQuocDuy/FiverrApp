@@ -1,6 +1,6 @@
 import classNames from "classnames/bind";
 import { useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import styles from "./login.module.scss";
 import { Logo } from "../../icons";
@@ -75,7 +75,7 @@ function Login() {
         </div>
         <footer className={cx("footer")}>
           <span className={cx("forgot-password")}>Forgot Password</span>
-          <span className={cx("register")}>Register</span>
+          <Link to='/register' className={cx("register")}>Register</Link>
         </footer>
       </form>
     </main>

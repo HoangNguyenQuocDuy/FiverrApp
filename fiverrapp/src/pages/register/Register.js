@@ -41,7 +41,14 @@ function Register() {
     try {
       const upload = await newRequest.post("auth/upload", formData);
 
-      const register = await newRequest.post("auth/register", { ...user, img: upload.data });
+      await newRequest.post("auth/register", { ...user, img: upload.data });
+
+      const userLogin = await newRequest.post("auth/login", {
+        username: user.username,
+        password: user.password,
+      });
+      localStorage.setItem("currentUser", JSON.stringify(userLogin.data))
+      console.log(userLogin);
 
       navigate("/");
     } catch (err) {

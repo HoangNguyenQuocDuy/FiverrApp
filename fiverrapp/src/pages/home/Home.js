@@ -197,7 +197,7 @@ function Home() {
           </div>
         </div>
       </div>
-      <div className={cx("products")}>
+      {/* <div className={cx("products")}>
         <h2 className={cx("max-width-box")}>
           Get inspired with projects made by our freelancers
         </h2>
@@ -207,7 +207,7 @@ function Home() {
           component="productCard"
           maxBox={true}
         />
-      </div>
+      </div> */}
     </div>
   );
 }

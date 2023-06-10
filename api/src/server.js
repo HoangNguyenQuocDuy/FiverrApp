@@ -11,6 +11,7 @@ import messageRoute from "../routes/message.router";
 import authRouter from "../routes/auth.route";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import checkTokenExpiration from "../middleware/checkTokenExpiration";
 
 dotenv.config();
 
@@ -26,19 +27,21 @@ app.use(function(req, res, next) {
 
 const port = process.env.PORT || 3003;
 
+
 // const connect = async () => {
 //     await mongoose.connect(process.env.MONGO)
 // }
 
 ConnectDB();
 
+app.use(checkTokenExpiration)
+app.use("/api/auth", authRouter);
 app.use("/api/users", userRoute);
 app.use("/api/conversations", conversationRoute);
 app.use("/api/orders", orderRoute);
 app.use("/api/reviews", reviewRoute);
 app.use("/api/gigs", gigRoute);
 app.use("/api/messages", messageRoute);
-app.use("/api/auth", authRouter);
 
 //custom return error
 app.use((err, req, res, next) => {

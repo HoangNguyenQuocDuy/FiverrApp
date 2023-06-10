@@ -26,12 +26,16 @@ export const uploadMultiFiles = async (req, res, next) => {
     if (!req.files) {
       return res.send("don't work!");
     }
-    const images = await Promise.all([...req.files].map(async (file) => {
-      const public_id = `fiverr/${file.filename}`;
-      const result = await cloudinary.uploader.upload(file.path, { public_id });
+    const images = await Promise.all(
+      [...req.files].map(async (file) => {
+        const public_id = `fiverr/${file.filename}`;
+        const result = await cloudinary.uploader.upload(file.path, {
+          public_id,
+        });
 
-      return result.url
-    }))
+        return result.url;
+      })
+    );
 
     return res.status(200).send(images);
   } catch (err) {
@@ -55,6 +59,10 @@ export const register = async (req, res) => {
   }
 };
 
+export const generalToken = (data, expires) => {
+  return jwt.sign(data, process.env.JWT_KEY, { expiresIn: expires });
+};
+
 export const login = async (req, res, next) => {
   try {
     const user = await User.findOne({ username: req.body.username });
@@ -69,9 +77,12 @@ export const login = async (req, res, next) => {
     const { _id, isSeller } = user._doc;
     const { password, ...info } = user._doc;
 
-    const token = jwt.sign({ _id, isSeller }, process.env.JWT_KEY);
+    const accessToken = generalToken({ _id, isSeller }, "10s");
+    const refreshToken = generalToken({ _id, isSeller }, "365d");
 
-    res.cookie("accessToken", token, { httpOnly: true }).status(200).send(info);
+    res.cookie("accessToken", accessToken, { httpOnly: true });
+    res.cookie("refreshToken", refreshToken, { httpOnly: true });
+    res.status(200).send(info);
   } catch (err) {
     return next(err);
   }
@@ -86,4 +97,36 @@ export const logout = async (req, res) => {
     })
     .status(200)
     .send("User has been logged out.");
+};
+
+export const refreshToken = async (req, res, next) => {
+  try {
+    const refreshToken = req.body.refreshToken;
+    console.log(refreshToken);
+    if (refreshToken) {
+      console.log(2);
+
+      jwt.verify(refreshToken, process.env.JWT_KEY, (err, decode) => {
+        if (err) return next(createError(403, "Token is not valid!"));
+
+        if (decode) {
+          console.log(3);
+
+          const newAccessToken = generalToken(
+            { _id: decode._id, isSeller: decode.isSeller },
+            "10s"
+          );
+          res.status(200).send(newAccessToken);
+          console.log("accessToken, ", newAccessToken);
+        }
+        next();
+      });
+    } else {
+      res.status(404).send("You are not authentication!");
+    }
+
+    next();
+  } catch (err) {
+    next(err);
+  }
 };
