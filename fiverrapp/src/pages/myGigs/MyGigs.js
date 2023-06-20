@@ -1,27 +1,60 @@
 import classNames from "classnames/bind";
+import jwt_decode from "jwt-decode";
+import axios from "axios";
 
 import styles from "./myGigs.module.scss";
-import useFetchData from "../../customHooks/useFetchData";
 import getCurrentUser from "../../utils/getCurrentUser";
 import newRequest from "../../utils/newRequest";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import useFetchDataVerifyToken from "../../customHooks/useFetchDataVerifyToken";
 
 const cx = classNames.bind(styles);
 function MyGigs() {
   const currentUser = getCurrentUser();
-
   const queryClient = useQueryClient();
+
+
+const axiosJWT = axios.create({
+  baseURL: "http://localhost:3030/api/",
+  withCredentials: true,
+});
+
+const refreshToken = async () => {
+  try {
+    const res = newRequest.post("/refresh-token");
+
+    return res.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+axiosJWT.interceptors.request.use(
+  async (config) => {
+    let date = new Date();
+    const accessToken = localStorage.getItem("accessToken");
+    const decodedToken = jwt_decode(accessToken);
+    if (decodedToken > date.getTime() / 1000) {
+      const newAccessToken = refreshToken();
+      localStorage.setItem("accessToken", newAccessToken);
+      config.headers["token"] = "Bearer " + newAccessToken;
+    }
+
+    return config;
+  },
+  (err) => Promise.reject(err)
+);
 
   const id = currentUser._id;
 
-  const [isLoading, error, data] = useFetchData(
+  const [isLoading, error, data] = useFetchDataVerifyToken(
     ['myGigs'],
     `/gigs?userId=${id}`
   );
 
   const mutation = useMutation({
     mutationFn: (id) => {
-      return newRequest.delete(`/gigs/single/${id}`);
+      return axiosJWT.delete(`/gigs/single/${id}`);
     },
     onSuccess: () => {
       queryClient.invalidateQueries(['myGigs']);

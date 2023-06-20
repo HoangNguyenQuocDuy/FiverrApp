@@ -6,6 +6,7 @@ import { gigReducer, initialState } from "../../reducers/gigReducer";
 import newRequest from "../../utils/newRequest";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
+import axiosJWT from "../../utils/requestRefreshToken";
 
 const cx = classNames.bind(styles);
 
@@ -74,7 +75,7 @@ function AddGigs() {
 
   const mutation = useMutation({
     mutationFn: (gig) => {
-      return newRequest.post(`/gigs`, gig);
+      return axiosJWT.post(`/gigs`, gig);
     },
     onSuccess: () => {
       queryClient.invalidateQueries(['myGigs']);

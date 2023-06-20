@@ -2,11 +2,13 @@ import jwt from 'jsonwebtoken'
 import createError from '../utils/createError';
 
 export const verifyToken = (req, res, next) => {
-    const token = req.cookies.accessToken;
-    if (!token) return next(createError(401, "You are not authentication!"))
+    const token = req.headers.token;
 
-    jwt.verify(token, process.env.JWT_KEY, async(err, decode) => {
-        if (err) return next(createError(403, "Token is not valid!"))
+    const accessToken = token.split(' ')[1]
+    if (!accessToken) return next(createError(401, "You are not authentication!"))
+
+    jwt.verify(accessToken, process.env.JWT_KEY, async(err, decode) => {
+        if (err) return next(createError(403, "Token is not valid!!"))
         req.userId = decode._id
         req.isSeller = decode.isSeller
         next()

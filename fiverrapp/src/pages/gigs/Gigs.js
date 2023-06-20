@@ -1,11 +1,9 @@
 import { useState, useEffect, useRef } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import classNames from "classnames/bind";
-import { useQuery } from "@tanstack/react-query";
 
 import GigCard from "../../components/gigCard/GigCard";
 import Breadcrumbs from "../../components/breadcrumbs/Breadcrumbs";
-import request from "../../utils/newRequest";
 
 import styles from "./gigs.module.scss";
 import useFetchData from "../../customHooks/useFetchData";

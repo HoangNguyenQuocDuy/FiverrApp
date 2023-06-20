@@ -54,7 +54,7 @@ function Navbar() {
   const handleLogout = async () => {
     try {
       await newRequest.post("auth/logout");
-      localStorage.setItem("currentUser", null);
+      localStorage.clear()
       navigate("/");
     } catch (err) {}
   };

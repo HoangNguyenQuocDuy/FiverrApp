@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
+import { useQueryClient, useMutation } from "@tanstack/react-query";
 import classNames from "classnames/bind";
 
-import request from "../../utils/newRequest";
 import styles from "./reviews.module.scss";
 import Review from "../review/Review";
-import useFetchData from "../../customHooks/useFetchData";
+import useFetchDataVerifyToken from "../../customHooks/useFetchDataVerifyToken";
+import axiosJWT from "../../utils/requestRefreshToken";
 
 const cx = classNames.bind(styles);
 
@@ -14,7 +14,7 @@ function Reviews({ gigId }) {
   const [evaluation, setEvaluation] = useState("");
   const queryClient = useQueryClient();
   
-  const [isLoading, error, data] = useFetchData('reviews', `/reviews/${gigId}`);
+  const [isLoading, error, data] = useFetchDataVerifyToken(['reviews'], `/reviews/${gigId}`);
 
   const dataReverse = data&&data.toReversed();
 
@@ -26,7 +26,7 @@ function Reviews({ gigId }) {
 
   const mutation = useMutation({
     mutationFn: (review) => {
-      return request.post("/reviews", review);
+      return axiosJWT.post("/reviews", review);
     },
     onSuccess: () => {
       queryClient.invalidateQueries(["reviews"]);
@@ -35,8 +35,11 @@ function Reviews({ gigId }) {
 
   const handleCreateReview = (e) => {
     e.preventDefault();
-    if (evaluation !== "" && star > 0) 
+    if (evaluation !== "" && star > 0) {
       mutation.mutate({ gigId, star, desc: evaluation });
+      setEvaluation('')
+      setStart(0)
+    }
   };
 
   return (

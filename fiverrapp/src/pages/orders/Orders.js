@@ -1,17 +1,19 @@
 import  { useNavigate } from 'react-router-dom'
 import classNames from "classnames/bind";
-import { useQuery } from "@tanstack/react-query";
+import jwt_decode from "jwt-decode";
 
 import styles from "./orders.module.scss";
 import request from "../../utils/newRequest";
-import useFetchData from '../../customHooks/useFetchData';
+import useFetchDataVerifyToken from '../../customHooks/useFetchDataVerifyToken';
 import getCurrentUser from '../../utils/getCurrentUser';
+import axios from 'axios';
+import newRequest from '../../utils/newRequest';
+import axiosJWT from '../../utils/requestRefreshToken';
 
 const cx = classNames.bind(styles);
 function Orders() {
-  const [ isLoading, error, data ] = useFetchData("orders", '/orders');
-
   const currentUser = getCurrentUser();
+  const [ isLoading, error, data ] = useFetchDataVerifyToken("orders", '/orders');
 
   const navigate = useNavigate()
 
@@ -20,7 +22,7 @@ function Orders() {
     const buyerId = order.buyerId;
     const id = sellerId + buyerId;
     try {
-      const res = await request.get(`/conversations/single/${id}`);
+      const res = await axiosJWT.get(`/conversations/single/${id}`);
       navigate(`/messages/${res.data.id}`)
     } catch (err) {
       if (err.response.status === 404) {

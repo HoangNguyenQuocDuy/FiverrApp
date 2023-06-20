@@ -5,4 +5,9 @@ const newRequest = axios.create({
     withCredentials: true
 })
 
+newRequest.interceptors.request.use(async (config) => {
+    config.headers["token"] = localStorage.getItem("accessToken")
+    return config
+})
+
 export default newRequest;

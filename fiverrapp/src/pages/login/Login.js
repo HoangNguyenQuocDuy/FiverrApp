@@ -19,9 +19,13 @@ function Login() {
   const handleClickSubmit = async (e) => {
     e.preventDefault();
     try {
-      const user = await newRequest.post("auth/login", { username, password });
-      localStorage.setItem("currentUser", JSON.stringify(user.data));
-      console.log(user.data);
+      const data = await newRequest.post("auth/login", { username, password });
+
+      const { info, accessToken } = data.data
+
+      localStorage.setItem("currentUser", JSON.stringify(info));
+      localStorage.setItem("accessToken", accessToken);
+      
       navigate("/");
     } catch (err) {
       console.log(err.response.data);

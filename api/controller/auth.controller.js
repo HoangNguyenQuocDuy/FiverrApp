@@ -4,6 +4,8 @@ import jwt from "jsonwebtoken";
 import createError from "../utils/createError";
 const cloudinary = require("cloudinary").v2;
 
+let refreshTokens = []
+
 export const handleUploadFile = async (req, res, next) => {
   try {
     if (!req.file) {
@@ -80,9 +82,16 @@ export const login = async (req, res, next) => {
     const accessToken = generalToken({ _id, isSeller }, "10s");
     const refreshToken = generalToken({ _id, isSeller }, "365d");
 
-    res.cookie("accessToken", accessToken, { httpOnly: true });
-    res.cookie("refreshToken", refreshToken, { httpOnly: true });
-    res.status(200).send(info);
+    refreshTokens.push(refreshToken);
+
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      //prevent attack CSRF
+      sameSite: 'strict',
+      //'true' when built
+      secure: false
+    })
+    return res.status(200).send({ info, accessToken });
   } catch (err) {
     return next(err);
   }
@@ -91,7 +100,7 @@ export const login = async (req, res, next) => {
 //we'll add 'BLACKLIST array' store logged tokens or use redis in the feature.
 export const logout = async (req, res) => {
   res
-    .clearCookie("accessToken", {
+    .clearCookie("refreshToken", {
       sameSite: "none",
       secure: true,
     })
@@ -101,32 +110,32 @@ export const logout = async (req, res) => {
 
 export const refreshToken = async (req, res, next) => {
   try {
-    const refreshToken = req.body.refreshToken;
-    console.log(refreshToken);
-    if (refreshToken) {
-      console.log(2);
+    const refreshToken = req.cookies.refreshToken;
 
-      jwt.verify(refreshToken, process.env.JWT_KEY, (err, decode) => {
-        if (err) return next(createError(403, "Token is not valid!"));
+    if (!refreshToken) {
+      return res.status(401).send('You are not authenticated!');
+    } 
+    if (!refreshTokens.includes(refreshToken)) return next(createError(401, 'Refresh Token is not valid!')) 
+    jwt.verify(refreshToken, process.env.JWT_KEY, (err, decoded) => {
+      if (err) return next(createError(403, "Token is not valid!"))
+      if (decoded) {
+        refreshTokens = refreshTokens.filter(t => t !== refreshToken)
 
-        if (decode) {
-          console.log(3);
+        const newAccessToken = generalToken({ _id: decoded._id, isSeller: decoded.isSeller}, '10s')
+        const newRefreshToken = generalToken({ _id: decoded._id, isSeller: decoded.isSeller}, '365d')
 
-          const newAccessToken = generalToken(
-            { _id: decode._id, isSeller: decode.isSeller },
-            "10s"
-          );
-          res.status(200).send(newAccessToken);
-          console.log("accessToken, ", newAccessToken);
-        }
-        next();
-      });
-    } else {
-      res.status(404).send("You are not authentication!");
-    }
+        refreshTokens.push(newRefreshToken)
 
-    next();
+        res.cookie("refreshToken", newRefreshToken, { 
+          httpOnly: true, 
+          secure: false, 
+          sameSite: "strict"
+        })
+
+        return res.status(200).send(newAccessToken)
+      }
+    })
   } catch (err) {
-    next(err);
+    return next(err);
   }
 };

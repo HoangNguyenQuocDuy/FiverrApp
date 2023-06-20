@@ -5,21 +5,22 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
 import styles from "./messages.module.scss";
 import request from "../../utils/newRequest";
-import useFetchData from "../../customHooks/useFetchData";
 import getCurrentUser from "../../utils/getCurrentUser";
+import useFetchDataVerifyToken from "../../customHooks/useFetchDataVerifyToken";
+import axiosJWT from "../../utils/requestRefreshToken";
 
 const cx = classNames.bind(styles);
 
 function Messages() {
   const currentUser = getCurrentUser();
 
-  const [ isLoading, error, data ] = useFetchData("conversations", `/conversations`);
+  const [ isLoading, error, data ] = useFetchDataVerifyToken("conversations", `/conversations`);
 
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
     mutationFn: (id) => {
-      return request.put(`/conversations/${id}`);
+      return axiosJWT.put(`/conversations/${id}`);
     },
     onSuccess: () => {
       queryClient.invalidateQueries(["conversations"]);

@@ -1,17 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
-import newRequest from "../utils/newRequest";
 import { useEffect } from "react";
 import axios from "axios";
+import axiosJWT from "../utils/requestRefreshToken";
 
-export default function useFetchData(key, param) {
-
+export default function useFetchDataVerifyToken(key, param) {
   const source = axios.CancelToken.source();
 
   const { isLoading, error, data, refetch } = useQuery(
     {
       queryKey: [...key],
       queryFn: () =>
-        newRequest
+        axiosJWT
           .get(param, { cancelToken: source.token })
           .then((res) => res.data),
       keepPreviousData: true,
@@ -22,11 +21,11 @@ export default function useFetchData(key, param) {
     }
   );
 
-  useEffect(() => {
-    return () => {
-      source.cancel('Component unmounted');
-    }
-  }, []);
+//   useEffect(() => {
+//     return () => {
+//       source.cancel("Component unmounted");
+//     };
+//   }, []);
 
   return [isLoading, error, data, refetch];
 }

@@ -34,7 +34,7 @@ const port = process.env.PORT || 3003;
 
 ConnectDB();
 
-app.use(checkTokenExpiration)
+// app.use(checkTokenExpiration)
 app.use("/api/auth", authRouter);
 app.use("/api/users", userRoute);
 app.use("/api/conversations", conversationRoute);

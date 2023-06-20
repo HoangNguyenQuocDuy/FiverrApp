@@ -5,10 +5,10 @@ import { useState, useRef, useEffect } from "react";
 import styles from "./message.module.scss";
 import Breadcrumbs from "../../components/breadcrumbs/Breadcrumbs";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import request from "../../utils/newRequest";
 import MessageItem from "../../components/message/message";
-import useFetchData from "../../customHooks/useFetchData";
 import getCurrentUser from "../../utils/getCurrentUser";
+import useFetchDataVerifyToken from "../../customHooks/useFetchDataVerifyToken";
+import axiosJWT from "../../utils/requestRefreshToken";
 
 const cx = classNames.bind(styles);
 
@@ -22,9 +22,9 @@ function Message() {
   const inpRef = useRef();
   const scrollBottomRef = useRef();
 
-  const [ isLoading, error, data ] = useFetchData(["conversations", id], `/messages/${id}`);
+  const [ isLoading, error, data ] = useFetchDataVerifyToken(["conversations", id], `/messages/${id}`);
 
-  const [ isLoadingChatUser, errorChatUser, dataChatUser ] = useFetchData(['user', chatUserId], `/users/${chatUserId}`)
+  const [ isLoadingChatUser, errorChatUser, dataChatUser ] = useFetchDataVerifyToken(['user', chatUserId], `/users/${chatUserId}`)
 
   console.log(chatUserId)
 
@@ -51,10 +51,10 @@ function Message() {
 
   const mutation = useMutation({
     mutationFn: (message) => {
-      return request.post("/messages", message);
+      return axiosJWT.post("/messages", message);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(["message"]);
+      queryClient.invalidateQueries(["conversations", id]);
     },
   });
 

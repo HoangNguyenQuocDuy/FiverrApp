@@ -4,13 +4,13 @@ import moment from "moment";
 
 import request from "../../utils/newRequest";
 import styles from "./review.module.scss";
-import useFetchData from "../../customHooks/useFetchData";
+import useFetchDataVerifyToken from "../../customHooks/useFetchDataVerifyToken";
 
 const cx = classnames.bind(styles);
 
 function Review({ review }) {
 
-  const [isLoading, error, user] = useFetchData([ 'reviews', review._id ], `/users/${review.userId}`);
+  const [isLoading, error, user] = useFetchDataVerifyToken([ 'reviews', review._id ], `/users/${review.userId}`);
 
   return (
     <div className={cx("chat-box")}>
